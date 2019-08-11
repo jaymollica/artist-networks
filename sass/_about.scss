@@ -10,14 +10,26 @@
     font-size: 48px;
   }
 
+  h2 {
+    margin-top: 50px;
+  }
+
   p {
     font-size: 24px;
   }
 
   blockquote {
-    font-size: 36px;
-    color: gray;
-    font-style: italic;
+    p {
+      font-size: 36px;
+      color: gray;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: right;
+      font-size: 16px;
+      color: gray;
+    }
   }
 
 }
