@@ -47,6 +47,20 @@
 
     }
 
+    public function getArtistNote($ulan) {
+      $data = array(
+        'ulan' => $ulan,
+      );
+
+      $sql = "SELECT note FROM artist_notes WHERE ulan=:ulan";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute($data);
+      $note = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $note[0]['note'];
+
+    }
+
     // get the preferred name of an artist from an ulan
     // returns a str
     public function getArtistByUlan($ulan) {

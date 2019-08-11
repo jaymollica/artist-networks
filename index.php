@@ -14,114 +14,7 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
-  <style>
-
-    html, body, ul, li, p, div, input {
-      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    }
-
-    html, body {
-      overflow:hidden;
-    }
-
-    .link {
-      stroke: #aaa;
-    }
-
-    .node text {
-      stroke:#333;
-      cursos:pointer;
-    }
-
-    .node circle{
-      stroke:#fff;
-      stroke-width:3px;
-      fill:#555;
-    }
-
-    .search-wrapper {
-      width:40%;
-      float: left;
-    }
-
-    #stage {
-      width: 60%;
-      height: 100%;
-      float: left;
-    }
-
-      /* Start by setting display:none to make this hidden.
-     Then we position it in relation to the viewport window
-     with position:fixed. Width, height, top and left speak
-     for themselves. Background we set to 80% white with
-     our animation centered, and no-repeating */
-    .modal {
-        display:    none;
-        position:   fixed;
-        z-index:    1000;
-        top:        0;
-        left:       0;
-        height:     100%;
-        width:      100%;
-        background: rgba( 255, 255, 255, .8 ) 
-                    url('http://i.stack.imgur.com/FhHRx.gif') 
-                    50% 50% 
-                    no-repeat;
-    }
-
-    /* When the body has the loading class, we turn
-       the scrollbar off with overflow:hidden */
-    body.loading .modal {
-        overflow: hidden;   
-    }
-
-    /* Anytime the body has the loading class, our
-       modal element will be visible */
-    body.loading .modal {
-        display: block;
-    }
-
-    .search-wrapper input {
-      width: 100%;
-      font-size: 36px;
-      border: none;
-      border-bottom: 2px solid black;
-      font-weight: 400;
-    }
-
-    .search-wrapper input::placeholder {
-      color: lightgray;
-      font-weight: 200;
-    }
-
-    .search-wrapper-inner {
-      margin-top:50px;
-      margin-left:50px;
-    }
-
-    .suggestion-list {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    .footer {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background-color: #F8F9F9;
-      color: black;
-      text-align: left;
-      height: 150px;
-      padding-left:50px;
-    }
-
-    .footer ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-  </style>
+  
 </head>
 
 <body>
@@ -149,7 +42,9 @@
   <div class="footer">
     <div class="info">
       <ul>
+        <li><a href="/">Social Networks of Artists</a></li>
         <li class="lede">by <a href="https://www.jaymollica.com">Jay Mollica</a><li>
+        <li><a href="/about.html">About</a></li>
         <li>&copy; 2019</li>
       </ul>
     </div>

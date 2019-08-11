@@ -47,6 +47,19 @@ $(function() {
 
         $("#suggestion-results").empty();
 
+        $.ajax({
+            url: "data.php",
+            dataType: "text",
+            data: {
+                    note: ulan,
+            },
+            success: function(data) {
+                console.log(data);
+                $("#suggestion-results").append("<p></p>").text(data);
+            }
+
+        });
+
         // submit form after selecting
         $("form#searchNetworks").submit();
     }
