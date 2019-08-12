@@ -2,7 +2,7 @@
 
   include('settings.php');
 
-  $file = fopen("data/TERM.out","r");
+  $file = fopen("data/BIOGRAPHY.out","r");
 
   set_time_limit(0);
   error_log("here");
@@ -13,12 +13,12 @@
     $parts = explode('\t', $line);
 
     //error_log(print_r($parts,true));
-    if($parts[2] == 'Y') {
-        $display = true;
-    }
-    else {
-        $display = false;
-    }
+    // if($parts[2] == 'Y') {
+    //     $display = true;
+    // }
+    // else {
+    //     $display = false;
+    // }
 
     if($parts[7] == 'P') {
         $preferred = true;
@@ -28,24 +28,27 @@
     }
 
     $data = [
-      'display' => $display,
-      'preferred' => $preferred,
+      'bio' => $parts[1],
+      'birth_year' => $parts[2],
+      'death_year' => $parts[5],
       'ulan' => $parts[9],
-      'alias' => $parts[10]
+      'preferred' => $preferred
     ];
 
     //error_log(print_r($data,true));
 
-    $sql = "INSERT INTO artist_aliases        (display,
-                                              preferred,
+    $sql = "INSERT INTO biographies        (biography,
+                                              birth_year,
+                                              death_year,
                                               ulan,
-                                              alias)
+                                              preferred)
 
 
-                                      VALUES (:display,
-                                              :preferred,
+                                      VALUES (:bio,
+                                              :birth_year,
+                                              :death_year,
                                               :ulan,
-                                              :alias)";
+                                              :preferred)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute($data);
 

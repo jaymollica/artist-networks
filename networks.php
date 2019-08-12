@@ -61,6 +61,20 @@
 
     }
 
+    public function getArtistBio($ulan) {
+      $data = array(
+        'ulan' => $ulan,
+      );
+
+      $sql = "SELECT biography FROM biographies WHERE ulan=:ulan AND preferred=1";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute($data);
+      $bio = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $bio[0]['biography'];
+
+    }
+
     // get the display name of an artist from an ulan
     // returns a str
     public function getArtistByUlan($ulan) {

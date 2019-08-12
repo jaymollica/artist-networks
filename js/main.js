@@ -54,7 +54,19 @@ $(function() {
                     note: ulan,
             },
             success: function(data) {
-                $("#suggestion-results").append("<p></p>").text(data);
+                var info = jQuery.parseJSON(data);
+
+                var bio = $("<p/>");
+                    bio.attr("class", "artist-bio")
+                       .html(info.bio);
+
+                var note = $("<p/>");
+                    note.text(info.note);
+
+                $("#bio").empty();
+                $("#bio")
+                    .append(bio)
+                    .append(note);
             }
 
         });
@@ -91,7 +103,20 @@ $(function() {
                     note: $(this).attr("id"),
             },
             success: function(data) {
-                $("#suggestion-results").append("<p></p>").text(data);
+                var info = jQuery.parseJSON(data);
+
+                var bio = $("<p/>");
+                    bio.attr("class", "artist-bio")
+                       .html(info.bio);
+
+                var note = $("<p/>");
+                    note.text(info.note);
+
+                $("#bio").empty();
+                $("#bio")
+                    .append(bio)
+                    .append(note);
+                    
             }
 
         });
@@ -122,7 +147,7 @@ $(function() {
                     const nodes = data.nodes.map(d => Object.create(d));
 
                     const simulation = d3.forceSimulation(nodes)
-                        .force("link", d3.forceLink(links).id(d => d.id).distance(60))
+                        .force("link", d3.forceLink(links).id(d => d.id).distance(30))
                         .force("charge", d3.forceManyBody())
                         .force("center", d3.forceCenter(width / 2, 250));
 

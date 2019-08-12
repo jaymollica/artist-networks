@@ -153,8 +153,10 @@ body.loading .modal {
   color: lightgray;
   font-weight: 200; }
 
-.search-wrapper p {
-  padding-bottom: 50px; }
+#bio {
+  padding-bottom: 150px; }
+  #bio .artist-bio {
+    font-size: 24px; }
 
 .search-wrapper-inner {
   margin-top: 50px;

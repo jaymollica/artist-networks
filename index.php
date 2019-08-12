@@ -30,6 +30,9 @@
           <input type="hidden" id="searchUlan" value="" />
         </form>
         <ul id="suggestion-results" class="suggestion-list"></ul>
+        <div id="bio">
+          <p class="artist-bio">Search for an artist and discover their social network.</p>
+        </div>
       </div>
     </div>
     <div class="modal">
