@@ -21,7 +21,6 @@ $(function() {
                     q: request.term
                 },
                 success: function( data ) {
-                    console.log(data);
                     $.each(data, function( index, value ) {
                         var a = $("<a></a>")
                         .text(value[0])
@@ -55,7 +54,6 @@ $(function() {
                     note: ulan,
             },
             success: function(data) {
-                console.log(data);
                 $("#suggestion-results").append("<p></p>").text(data);
             }
 
@@ -73,6 +71,13 @@ $(function() {
             $("body").removeClass("loading"); 
         }    
     });
+
+    $(".close-modal").bind("click", function() {
+    });
+
+    function closeModal() {
+        $(this).closest(".node-modal").remove();
+    }
 
     // fetch data and build network visualization
     $("form#searchNetworks").submit(function (e) {
@@ -121,6 +126,7 @@ $(function() {
                         .attr("r", 5)
                         .attr("fill", "red")
                         .attr("class", "degree")
+                        .on("click", showModal )
                         .call(drag(simulation));
 
                     node.append("title")
@@ -129,6 +135,35 @@ $(function() {
                     node.attr("r", function(){
                         return 5;
                     });
+
+                    function showModal(e) {
+
+                        var y = $("#stage").offset().top + ( e.y - 50 );
+                        var x = $("#stage").offset().left + ( e.x - 100 );
+
+                        var div = $("<span/>");
+                            div.attr("position", "absolute")
+                               .attr("class", "node-modal")
+                               .css({
+                                    "top":y,
+                                    "left":x,
+                                    "background-color": "white",
+                                })
+                               .attr("class", "node-modal")
+                               .html(e.artist);
+
+                        var closeA = $("<a/>");
+                            closeA.bind("click", closeModal)
+                                  .attr("href", "#")
+                                  .attr("class", "close-modal")
+                                  .html("&times;");
+
+                        div.append(closeA);
+
+                        $(".node-modal").remove();
+                        $("body").append(div);
+
+                    }
 
                     simulation.on("tick", () => {
                         link
@@ -141,8 +176,6 @@ $(function() {
                             .attr("cx", d => d.x)
                             .attr("cy", d => d.y);
                     });
-
-                    //invalidation.then(() => simulation.stop());
 
                     return svg.node();
                 }
@@ -182,7 +215,6 @@ $(function() {
 
                 $("#stage").empty();
                 $("#stage").append(chart);
-
 
             }
         });
