@@ -61,7 +61,7 @@
 
     }
 
-    // get the preferred name of an artist from an ulan
+    // get the display name of an artist from an ulan
     // returns a str
     public function getArtistByUlan($ulan) {
       $data = array(
@@ -73,17 +73,17 @@
       $stmt->execute($data);
       $artist_aliases = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-      // preferred alias is only marked if multiple aliases are present
+      // display alias is only marked if multiple aliases are present
       if(count($artist_aliases) > 1) {
-        $preferred = array_search(1, array_column($artist_aliases, 'preferred'));
+        $display = array_search(1, array_column($artist_aliases, 'display'));
       }
       else {
-        $preferred = 0;
+        $display = 0;
       }
 
-      $preferred_alias = $artist_aliases[$preferred]['alias'];
+      $display_alias = $artist_aliases[$display]['alias'];
 
-      return $preferred_alias;
+      return $display_alias;
 
     }
 
@@ -94,7 +94,18 @@
 
       //right now lets get only folks with preferred aliases (leaves out those with only 1 alias)
       //need an operation on the DB to update those with only one alias to preferred = 1
-      $sql = "SELECT * FROM artist_aliases WHERE alias LIKE :name AND preferred=1";
+
+      $sql = "SELECT aa.*
+              FROM artist_aliases aa
+              WHERE aa.alias LIKE :name AND
+              aa.id = (
+                SELECT aa2.id
+                FROM artist_aliases aa2
+                WHERE aa2.alias LIKE :name AND
+                aa2.ulan = aa.ulan 
+                ORDER BY aa2.display DESC, aa2.preferred DESC
+                LIMIT 1
+              )";
       $stmt = $this->pdo->prepare($sql);
       $stmt->execute($data);
       $artist_aliases = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -173,7 +184,20 @@
 
     }
 
-    // gets the degrees of separation between two artists
+
+    // gets array of relationships in semantic terms:
+
+    // array(
+    //   'cousin of someartist',
+    //   'taught by someotherartist',
+    //   'worked with anotherartist',
+    //   ...
+    // );
+    public function getSemanticGraph($ulan) {
+
+    }
+
+    // gets the degrees of separation between two artists given two ulans
     // returns an int [1-6]
     public function getDegreesOfSeparation($ulan1, $ulan2) {
 

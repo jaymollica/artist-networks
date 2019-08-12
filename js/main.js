@@ -21,6 +21,7 @@ $(function() {
                     q: request.term
                 },
                 success: function( data ) {
+                    console.log(data);
                     $.each(data, function( index, value ) {
                         var a = $("<a></a>")
                         .text(value[0])
