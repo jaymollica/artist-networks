@@ -64,7 +64,8 @@ $(function() {
     }
 
     $(document).on({
-        ajaxStart: function() { 
+        ajaxStart: function() {
+            $(".node-modal").remove();
             $("body").addClass("loading");    
         },
         ajaxStop: function() { 
@@ -72,11 +73,30 @@ $(function() {
         }    
     });
 
-    $(".close-modal").bind("click", function() {
-    });
-
     function closeModal() {
         $(this).closest(".node-modal").remove();
+    }
+
+    function clickArtistModalLink(e) {
+
+        $("#hint").val($(this).text());
+        $("#searchUlan").val($(this).attr("id"));
+
+        $("#suggestion-results").empty();
+
+        $.ajax({
+            url: "data.php",
+            dataType: "text",
+            data: {
+                    note: $(this).attr("id"),
+            },
+            success: function(data) {
+                $("#suggestion-results").append("<p></p>").text(data);
+            }
+
+        });
+        // // submit form after selecting
+        $("form#searchNetworks").submit();
     }
 
     // fetch data and build network visualization
@@ -149,8 +169,16 @@ $(function() {
                                     "left":x,
                                     "background-color": "white",
                                 })
-                               .attr("class", "node-modal")
-                               .html(e.artist);
+                               .attr("class", "node-modal");
+
+                        var artistLink = $("<a/>");
+                            artistLink.bind("click", clickArtistModalLink)
+                                      .attr("href", "#")
+                                      .attr("class", "artist-link")
+                                      .attr("id", e.id)
+                                      .html(e.artist);
+
+                        div.append(artistLink);
 
                         var closeA = $("<a/>");
                             closeA.bind("click", closeModal)
