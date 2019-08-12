@@ -82,9 +82,9 @@ textarea {
 html, body, ul, li, p, div, input {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
-/*html, body {
-  overflow:hidden;
-}*/
+a {
+  color: #1F01F9; }
+
 .link {
   stroke: #aaa; }
 
@@ -104,7 +104,8 @@ html, body, ul, li, p, div, input {
 #stage {
   width: 60%;
   height: 60%;
-  float: left; }
+  float: left;
+  display: fixed; }
 
  /* Start by setting display:none to make this hidden.
 Then we position it in relation to the viewport window
@@ -157,6 +158,10 @@ body.loading .modal {
   padding-bottom: 150px; }
   #bio .artist-bio {
     font-size: 24px; }
+  #bio .bio-relationships-list {
+    list-style: none;
+    padding: 0;
+    line-height: 36px; }
 
 .search-wrapper-inner {
   margin-top: 50px;

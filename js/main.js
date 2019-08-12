@@ -21,17 +21,31 @@ $(function() {
                     q: request.term
                 },
                 success: function( data ) {
-                    $.each(data, function( index, value ) {
-                        var a = $("<a></a>")
-                        .text(value[0])
-                        .attr("id", value[1])
-                        .attr("href", "#")
-                        .addClass("autocompleteOption")
-                        .bind("click", clickAutocompleteResult);
 
-                        var li = $("<li></li>").append(a);
-                        $("#suggestion-results").append(li);
-                    });
+                    if(data.length == 0) {
+                        var noResults = $("<p/>");
+
+                                noResults.html("We could not find a match. Maybe try <a href='#' id=500006031 class='artist-link'>Andy Warhol</a> or <a href='#' id=500012368 class='artist-link'>Mary Cassatt</a>");
+
+                                noResults.children('a').bind("click", clickArtistModalLink);
+
+                        
+                        $("#bio").append(noResults);
+                    } else {
+
+                        $.each(data, function( index, value ) {
+                            var a = $("<a></a>")
+                            .text(value[0])
+                            .attr("id", value[1])
+                            .attr("href", "#")
+                            .addClass("autocompleteOption")
+                            .bind("click", clickAutocompleteResult);
+
+                            var li = $("<li></li>").append(a);
+                            $("#suggestion-results").append(li);
+                        });
+
+                    }
                 }
             });
         },
@@ -63,10 +77,22 @@ $(function() {
                 var note = $("<p/>");
                     note.text(info.note);
 
+                var rels = $("<ul/>");
+                    rels.attr("class", "bio-relationships-list");
+
+                $.each(info.rels, function( index, value ) {
+                    var li = $("<li/>");
+                        li.html(value)
+                          .children().bind("click", clickArtistModalLink);
+
+                    rels.append(li);
+                });
+
                 $("#bio").empty();
                 $("#bio")
                     .append(bio)
                     .append(note);
+                $("#bio").append(rels);
             }
 
         });
@@ -78,6 +104,7 @@ $(function() {
     $(document).on({
         ajaxStart: function() {
             $(".node-modal").remove();
+            $("#bio").empty();
             $("body").addClass("loading");    
         },
         ajaxStop: function() { 
@@ -112,10 +139,22 @@ $(function() {
                 var note = $("<p/>");
                     note.text(info.note);
 
+                var rels = $("<ul/>");
+                    rels.attr("class", "bio-relationships-list");
+
+                $.each(info.rels, function( index, value ) {
+                    var li = $("<li/>");
+                        li.html(value)
+                          .children().bind("click", clickArtistModalLink);
+
+                    rels.append(li);
+                });
+
                 $("#bio").empty();
                 $("#bio")
                     .append(bio)
                     .append(note);
+                $("#bio").append(rels);
                     
             }
 
@@ -147,7 +186,7 @@ $(function() {
                     const nodes = data.nodes.map(d => Object.create(d));
 
                     const simulation = d3.forceSimulation(nodes)
-                        .force("link", d3.forceLink(links).id(d => d.id).distance(30))
+                        .force("link", d3.forceLink(links).id(d => d.id).distance(50))
                         .force("charge", d3.forceManyBody())
                         .force("center", d3.forceCenter(width / 2, 250));
 

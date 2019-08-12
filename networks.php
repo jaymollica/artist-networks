@@ -209,6 +209,25 @@
     // );
     public function getSemanticGraph($ulan) {
 
+      $data = array(
+        'ulan' => $ulan,
+      );
+
+      $sql = "SELECT * FROM artist_relationships WHERE artist_ulan=:ulan";
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute($data);
+      $relationships = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      $rels = array();
+
+      foreach($relationships AS $r) {
+        $name = $this->getArtistByUlan($r['related_ulan']);
+        $rel = $this->getRelationshipName($r['relationship_type']);
+        array_push($rels, "<em>".$rel."</em> <a href='#' id=".$r['related_ulan']." class='artist-link'>".$name."</a>");
+      }
+
+      return $rels;
+
     }
 
     // gets the degrees of separation between two artists given two ulans
