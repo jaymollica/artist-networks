@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Social Networks of Artists</title>
-  <meta name="description" content="">
+  <title>Medias Res: Explore the social networks of artists</title>
+  <meta name="description" content="Explore the social networks of artists">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="manifest" href="site.webmanifest">
@@ -31,7 +31,7 @@
         </form>
         <ul id="suggestion-results" class="suggestion-list"></ul>
         <div id="bio">
-          <p class="artist-bio">Search for an artist and discover their social network.</p>
+          <p class="artist-bio">Search for an artist to explore their social network.</p><p>Not sure where to start? Try <a href="#" class="artist-link" id="500018666">Georgia O&rsquo;Keefe</a> or <a href="#" class="artist-link" id="500009666">Pablo Picasso</a>.
         </div>
       </div>
     </div>
@@ -44,7 +44,8 @@
   <div class="footer">
     <div class="info">
       <ul>
-        <li><a href="/">Social Networks of Artists</a></li>
+        <li><a href="/">medias-res.net</a></li>
+        <li>Explore the social networks of artists</li>
         <li class="lede">by <a href="https://www.jaymollica.com">Jay Mollica</a><li>
         <li><a href="/about.html">About</a></li>
         <li>&copy; 2019</li>

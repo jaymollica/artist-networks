@@ -5,6 +5,8 @@ $(function() {
         $(this).select();
     });
 
+    $('.artist-link').bind("click", clickArtistModalLink);
+
     // autocomplete
     $( "#hint" ).autocomplete({
 
@@ -25,7 +27,7 @@ $(function() {
                     if(data.length == 0) {
                         var noResults = $("<p/>");
 
-                                noResults.html("We could not find a match. Maybe try <a href='#' id=500006031 class='artist-link'>Andy Warhol</a> or <a href='#' id=500012368 class='artist-link'>Mary Cassatt</a>");
+                                noResults.html("We could not find a match. Maybe try <a href='#' id=500006031 class='artist-link'>Andy Warhol</a> or <a href='#' id=500012368 class='artist-link'>Mary Cassatt</a>.");
 
                                 noResults.children('a').bind("click", clickArtistModalLink);
 
@@ -117,6 +119,8 @@ $(function() {
     }
 
     function clickArtistModalLink(e) {
+
+        console.log("hello");
 
         $("#hint").val($(this).text());
         $("#searchUlan").val($(this).attr("id"));
