@@ -106,9 +106,6 @@
         'name' => "%$name%",
       );
 
-      //right now lets get only folks with preferred aliases (leaves out those with only 1 alias)
-      //need an operation on the DB to update those with only one alias to preferred = 1
-
       $sql = "SELECT aa.*
               FROM artist_aliases aa
               WHERE aa.alias LIKE :name AND
@@ -120,6 +117,7 @@
                 ORDER BY aa2.display DESC, aa2.preferred DESC
                 LIMIT 1
               )";
+
       $stmt = $this->pdo->prepare($sql);
       $stmt->execute($data);
       $artist_aliases = $stmt->fetchAll(PDO::FETCH_ASSOC);

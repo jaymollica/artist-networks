@@ -4,8 +4,24 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Primary Meta Tags -->
   <title>Medias Res: Explore the social networks of artists</title>
-  <meta name="description" content="Explore the social networks of artists">
+  <meta name="title" content="Medias Res: Explore the social networks of artists">
+  <meta name="description" content="In medias res is Latin for “in the middle of things” and is used to describe a story that picks up somewhere in between the beginning and the end of events. This site is meant to illustrate that great artists often emerge out of prexisting movements or influences before going on to change culture and, in turn, influence future artists.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.medias-res.net/">
+  <meta property="og:title" content="Medias Res: Explore the social networks of artists">
+  <meta property="og:description" content="Explore the social networks of artists">
+  <meta property="og:image" content="tile.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://www.medias-res.net/">
+  <meta property="twitter:title" content="Medias Res: Explore the social networks of artists">
+  <meta property="twitter:description" content="Explore the social networks of artists">
+  <meta property="twitter:image" content="tile.png">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="manifest" href="site.webmanifest">
@@ -54,20 +70,24 @@
   </div>
   
   <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="js/vendor/jquery-3.3.1.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
-  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" />
+  <script src="js/vendor/jquery-ui.js"></script>
+  <script src="js/vendor/d3.v5.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/vendor/jquery-ui.css" />
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145586582-1"></script>
   <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-145586582-1');
   </script>
-  <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
 </body>
 
 </html>

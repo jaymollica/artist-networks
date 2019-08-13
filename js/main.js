@@ -120,8 +120,6 @@ $(function() {
 
     function clickArtistModalLink(e) {
 
-        console.log("hello");
-
         $("#hint").val($(this).text());
         $("#searchUlan").val($(this).attr("id"));
 
@@ -211,8 +209,28 @@ $(function() {
                         .selectAll("circle")
                         .data(nodes)
                         .join("circle")
-                        .attr("r", 5)
-                        .attr("fill", "red")
+                        .attr("r", function(e) {
+                            var r = 5;
+                            console.log(e.group);
+                            if(e.group == 0) {
+                                console.log("zero");
+                                r = 10;
+                            } 
+                            return r;
+                        })
+                        .attr("fill", function(e) {
+                            var color = "lightgray";
+                            if(e.group == 0) {
+                                color = "red";
+                            } else if(e.group == 1) {
+                                color = "purple";
+                            } else if(e.group == 2) {
+                                color = "gray";
+                            } else if(e.group == 3) {
+                                color = "lightgray"
+                            }
+                            return color;
+                        })
                         .attr("class", "degree")
                         .on("click", showModal )
                         .call(drag(simulation));

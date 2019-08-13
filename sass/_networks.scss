@@ -47,7 +47,7 @@ html, body, ul, li, p, div, input {
         height:     100%;
         width:      100%;
         background: rgba( 255, 255, 255, .8 ) 
-                    url('http://i.stack.imgur.com/FhHRx.gif') 
+                    url('../img/loading.gif') 
                     50% 50% 
                     no-repeat;
     }
@@ -104,9 +104,6 @@ html, body, ul, li, p, div, input {
         line-height: 36px;
       }
 
-    }
-
-    .search-wrapper p {
     }
 
     .search-wrapper-inner {
