@@ -156,8 +156,7 @@ $(function() {
                 $("#bio")
                     .append(bio)
                     .append(note);
-                $("#bio").append(rels);
-                    
+                $("#bio").append(rels);                    
             }
 
         });

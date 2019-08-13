@@ -3,5 +3,6 @@
 # Useful .gitignore templates: https://github.com/github/gitignore
 
 .DS_Store
-data*
+load_data
 settings.php
+data/
