@@ -47,6 +47,7 @@
     echo json_encode($data);
   }
   elseif(isset($_GET['note'])) {
+
     $ulan = $_GET['note'];
     $note = $nw->getArtistNote($ulan);
     $bio = $nw->getArtistBio($ulan);

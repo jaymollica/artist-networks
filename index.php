@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <!-- Primary Meta Tags -->
   <title>Medias Res: Explore the social networks of artists</title>
   <meta name="title" content="Medias Res: Explore the social networks of artists">
   <meta name="description" content="In medias res is Latin for “in the middle of things” and is used to describe a story that picks up somewhere in between the beginning and the end of events. This site is meant to illustrate that great artists often emerge out of prexisting movements or influences before going on to change culture and, in turn, influence future artists.">
