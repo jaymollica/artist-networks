@@ -95,7 +95,12 @@
         $display = 0;
       }
 
-      $display_alias = $artist_aliases[$display]['alias'];
+      if(isset($artist_aliases[$display]['alias'])) {
+        $display_alias = $artist_aliases[$display]['alias'];
+      }
+      else {
+        $display_alias = array();
+      }
 
       return $display_alias;
 
@@ -147,7 +152,7 @@
       //   array()...
       // );
 
-    public function prepareNetworkForVisualization($network) {
+    public function prepareNetworkForVisualization($network,$init_ulan) {
 
       $nodes = array();
       $links = array();
@@ -155,15 +160,23 @@
       $all_ulans = array();
 
       foreach($network as $n) {
+
+        if($init_ulan == $n['artist_ulan']) {
+          $degree = 0;
+        }
+        else {
+          $degree = $n['degree'];
+        }
+
         $new_node = array(
           'id' => $n['artist_ulan'],
-          'group' => 0,
+          'group' => $degree,
           'artist' => $this->getArtistByUlan($n['artist_ulan']),
         );
 
         $new_rel_node = array(
           'id' => $n['related_ulan'],
-          'group' => 1,
+          'group' => $n['degree'],
           'artist' => $this->getArtistByUlan($n['related_ulan']),
         );
 

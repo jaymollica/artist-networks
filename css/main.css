@@ -83,7 +83,7 @@ html, body, ul, li, p, div, input {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 a {
-  color: #1F01F9; }
+  color: #F24D29; }
 
 .link {
   stroke: #aaa; }
@@ -96,6 +96,11 @@ a {
   stroke: #fff;
   stroke-width: 3px;
   fill: #555; }
+
+circle.degree-0 {
+  r: 5px;
+  stroke: #F24D29;
+  stroke-width: 5px; }
 
 .search-wrapper {
   width: 40%;
@@ -177,6 +182,7 @@ body.loading .modal {
   bottom: 0;
   width: 100%;
   background-color: #F8F9F9;
+  border-top: 1px solid #C4CFD0;
   color: black;
   text-align: left;
   height: 150px;

@@ -204,16 +204,14 @@ $(function() {
                         .attr("stroke-width", d => Math.sqrt(d.value));
 
                     const node = svg.append("g")
-                        .attr("stroke", "#fff")
+                        .attr("stroke", "white")
                         .attr("stroke-width", 1.5)
                         .selectAll("circle")
                         .data(nodes)
                         .join("circle")
                         .attr("r", function(e) {
                             var r = 5;
-                            console.log(e.group);
                             if(e.group == 0) {
-                                console.log("zero");
                                 r = 10;
                             } 
                             return r;
@@ -221,17 +219,20 @@ $(function() {
                         .attr("fill", function(e) {
                             var color = "lightgray";
                             if(e.group == 0) {
-                                color = "red";
+                                color = "white";
                             } else if(e.group == 1) {
-                                color = "purple";
+                                color = "#F24D29";
+                                //color = "#1DACE8";
                             } else if(e.group == 2) {
-                                color = "gray";
+                                color = "#F7B0AA";
                             } else if(e.group == 3) {
-                                color = "lightgray"
+                                color = "#C4CFD0"
                             }
                             return color;
                         })
-                        .attr("class", "degree")
+                        .attr("class", function(e) { 
+                            return "degree-"+e.group;
+                        })
                         .on("click", showModal )
                         .call(drag(simulation));
 
