@@ -243,9 +243,163 @@
 
     // gets the degrees of separation between two artists given two ulans
     // returns an int [1-6]
-    public function getDegreesOfSeparation($ulan1, $ulan2) {
+    // public function baconator($left_artist, $right_artist) {
+    //   $max_depth = 4;
 
-    }
+    //   if($left_artist == $right_artist) {
+    //     return $left_artist;
+    //   }
+
+    //   $left = array();
+    //   $right = array();
+
+    //   $left[$left_artist] = array();
+    //   $right[$right_artist] = array();
+
+    //   $center_artists = $this->blendNetworks($left_artist, $right_artist, $left_members, $right_members);
+
+    //   if ( empty($center_artists) ) {
+    //     return "These artists are over ".$max_depth." degrees apart.";
+    //   }
+
+    
+
+    // // for center_artist in center_artists:
+    // //     connections = [center_artist]
+    // //     #print("center artist", center_artist)
+    // //     artist = center_artist
+    // //     while left[artist] != None:
+    // //         artist = left[artist]
+    // //         connections.insert(0, artist)
+            
+    // //     artist = center_artist
+    // //     while right[artist] != None:
+    // //         artist = right[artist]
+    // //         connections.append(artist)
+    // //     print("AHHHH", center_artist, connections, "degrees: ", len(connections) - 1)
+
+
+    //   return $center_artists;
+
+    // }
+
+    // // def do_things(in_left_artist, in_right_artist, left, right):
+    // // left_artists = [(1, in_left_artist)]
+    // // right_artists = [(1, in_right_artist)]
+    // // while len(left_artists) > 0 or len(right_artists) > 0:
+    // //     print("while", left_artists, right_artists)
+    // //     return_val = []
+    // //     if len(left_artists) > 0:
+    // //         depth, left_artist = left_artists.pop(0)
+    // //         if depth > MAX_DEPTH:
+    // //             print("max depth!!!")
+    // //             return None
+    // //         left_network = get_network(left_artist)
+
+    // //         print("left network", depth, left_network)
+    // //         for artist in left_network:
+    // //             if artist not in left:
+    // //                 left[artist] = left_artist
+    // //                 left_artists.append((depth + 1, artist))
+    // //             if artist in right:
+    // //                 return_val.append(artist)
+    // //     if len(return_val) > 0:
+    // //         return return_val
+    // //     if len(right_artists) > 0:
+    // //         depth, right_artist = right_artists.pop(0)
+    // //         if depth > MAX_DEPTH:
+    // //             print("max depth!!!")
+    // //             return None
+    // //         right_network = get_network(right_artist)
+
+    // //         print("right network", depth, right_network)
+    // //         for artist in right_network:
+    // //             if artist not in right:
+    // //                 right[artist] = right_artist
+    // //                 right_artists.append((depth + 1, artist))
+    // //             if artist in left:
+    // //                 return_val.append(artist)
+    // //     if len(return_val) > 0:
+    // //         return return_val
+    // // return None
+
+    // public function blendNetworks($left_artist, $right_artist, $left_members, $right_members, $max_depth = 4) {
+
+    //   $left_artists = array( 
+    //     array(1, $left_members),
+    //   );
+
+    //   $right_artists = array(
+    //     array(1, $right_members),
+    //   );
+
+    //   while ( count($left_artists) > 0 || count($right_artists) > 0 ) {
+    //     print ("while");
+    //     $return_array = array();
+
+    //     if(count($left_artists) > 0) {
+    //       $removed = array_shift($left_artists);
+    //       $depth = $removed[0];
+    //       $la = $removed[1];
+
+    //       if($depth == $max_depth) {
+    //         return array();
+    //       }
+
+    //       $left_network = $this->getNetwork($la);
+    //       foreach ($left_network AS $ln) {
+    //         $left_ulan = $ln['artist_ulan'];
+    //         if(in_array($left_ulan, $left)) {
+    //           $left[$left_ulan] = $left_artist;
+    //           array_push( $left_artists, array($depth++, $left_ulan) );
+    //           if(in_array($left_ulan, $right)) {
+    //             array_push($return_array, $left_ulan);
+    //           }
+    //         }
+
+    //         if(count($return_array > 0)) {
+    //           return $return_array;
+    //         }
+            
+    //       }
+
+    //     }
+
+    //     if(count($right_artists) > 0) {
+    //       $removed = array_shift($right_artists);
+    //       $depth = $removed[0];
+    //       $ra = $removed[1];
+
+    //       if($depth == $max_depth) {
+    //         return array();
+    //       }
+
+    //       $right_network = $this->getNetwork($ra);
+    //       foreach ($left_network AS $ln) {
+    //         $left_ulan = $ln['artist_ulan'];
+    //         if(in_array($left_ulan, $left)) {
+    //           $left[$left_ulan] = $left_artist;
+    //           array_push( $left_artists, array($depth++, $left_ulan) );
+    //           if(in_array($left_ulan, $right)) {
+    //             array_push($return_array, $left_ulan);
+    //           }
+    //         }
+
+    //         if(count($return_array > 0)) {
+    //           return $return_array;
+    //         }
+            
+    //       }
+
+    //     }
+
+
+    //   }
+
+
+
+    //   return array();
+    // }
 
     // is one artist in the other artists network?
     // returns boolean

@@ -82,6 +82,9 @@ $(function() {
                 var rels = $("<ul/>");
                     rels.attr("class", "bio-relationships-list");
 
+                var mob = $("<div/>");
+                    mob.attr("id", "mobile-stage");
+
                 $.each(info.rels, function( index, value ) {
                     var li = $("<li/>");
                         li.html(value)
@@ -93,6 +96,7 @@ $(function() {
                 $("#bio").empty();
                 $("#bio")
                     .append(bio)
+                    .append(mob)
                     .append(note);
                 $("#bio").append(rels);
             }
@@ -144,6 +148,9 @@ $(function() {
                 var rels = $("<ul/>");
                     rels.attr("class", "bio-relationships-list");
 
+                var mob = $("<div/>");
+                    mob.attr("id", "mobile-stage");
+
                 $.each(info.rels, function( index, value ) {
                     var li = $("<li/>");
                         li.html(value)
@@ -155,8 +162,9 @@ $(function() {
                 $("#bio").empty();
                 $("#bio")
                     .append(bio)
+                    .append(mob)
                     .append(note);
-                $("#bio").append(rels);                    
+                $("#bio").append(rels);                   
             }
 
         });
@@ -187,9 +195,9 @@ $(function() {
                     const nodes = data.nodes.map(d => Object.create(d));
 
                     const simulation = d3.forceSimulation(nodes)
-                        .force("link", d3.forceLink(links).id(d => d.id).distance(50))
+                        .force("link", d3.forceLink(links).id(d => d.id).distance(60))
                         .force("charge", d3.forceManyBody())
-                        .force("center", d3.forceCenter(width / 2, 250));
+                        .force("center", d3.forceCenter(width / 2, 450));
 
                     const svg = d3.create("svg")
                         .attr("viewBox", [0, 0, width, height]);
@@ -238,9 +246,9 @@ $(function() {
                     node.append("title")
                         .text(d => d.artist);
 
-                    node.attr("r", function(){
-                        return 5;
-                    });
+                    // node.attr("r", function(){
+                    //     return 5;
+                    // });
 
                     function showModal(e) {
 
@@ -326,6 +334,9 @@ $(function() {
                         .on("drag", dragged)
                         .on("end", dragended);
                 }
+
+                $("#mobile-stage").empty();
+                $("#mobile-stage").append(chart);
 
                 $("#stage").empty();
                 $("#stage").append(chart);

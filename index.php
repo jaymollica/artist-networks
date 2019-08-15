@@ -6,7 +6,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Medias Res: Explore the social networks of artists</title>
   <meta name="title" content="Medias Res: Explore the social networks of artists">
-  <meta name="description" content="In medias res is Latin for “in the middle of things” and is used to describe a story that picks up somewhere in between the beginning and the end of events. This site is meant to illustrate that great artists often emerge out of prexisting movements or influences before going on to change culture and, in turn, influence future artists.">
+  <meta name="description" content="In medias res is Latin for “in the middle of things” and is used to describe a story that picks up somewhere in between the beginning and the end of events. This site is meant to illustrate that great artists often emerge out of preexisting movements or influences before going on to change culture and, in turn, influence future artists.">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -38,6 +38,10 @@
 
   <!-- Add your site or application content here -->
   <div class="container">
+    <div id="mobile-header">
+      <h1><a href="/">Medias Res</a></h1>
+      <p>Explore the social networks of artists</p>
+    </div>
     <div class="search-wrapper">
       <div class="search-wrapper-inner">
         <form id="searchNetworks">
@@ -65,6 +69,12 @@
         <li><a href="/about.html">About</a></li>
         <li>&copy; 2019</li>
       </ul>
+    </div>
+  </div>
+
+  <div class="site-title-container">
+    <div class="site-title">
+      <p><a href="/">Medias Res</a></p>
     </div>
   </div>
   

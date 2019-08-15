@@ -61,5 +61,22 @@
 
     echo json_encode($info);
   }
+  elseif(isset($_GET['bacon'])) {
+
+    $bacon = array(
+      500009666, //picasso
+      500006031, //warhol
+    );
+
+    $ulan1 = $bacon[0];
+    $ulan2 = $bacon[1];
+
+    $b = $nw->baconator($ulan1, $ulan2);
+
+    error_log(print_r($b,true));
+
+    echo json_encode($b);
+
+  }
 
 ?>

@@ -1,9 +1,42 @@
-html, body, ul, li, p, div, input {
+
+  $site-color: #F24D29;
+  $box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+    html, body, ul, li, p, div, input {
       font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     }
 
     a {
-      color: #F24D29;
+      color: $site-color;
+    }
+
+    .site-title-container {
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      right: 0;
+
+      .site-title {
+        float: right;
+        border: 1px solid red;
+        margin-right: 50px;
+        margin-top: 50px;
+        background-color: $site-color;
+        color: white;
+        padding-left: 24px;
+        padding-right: 24px;
+        box-shadow: $box-shadow;
+        p {
+          font-family: Georgia, serif;
+          font-style: italic;
+          font-size: 24px;
+          font-weight: bold;
+        }
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
     }
 
     .link {
@@ -23,13 +56,17 @@ html, body, ul, li, p, div, input {
 
     circle.degree-0 {
       r: 5px;
-      stroke: #F24D29;
+      stroke: $site-color;
       stroke-width: 5px;
     }
 
     .search-wrapper {
       width:40%;
       float: left;
+    }
+
+    #mobile-header {
+      display:none;
     }
 
     #stage {
@@ -74,7 +111,7 @@ html, body, ul, li, p, div, input {
       position: absolute;
       padding: 12px;
       z-index: 10000;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      box-shadow: $box-shadow;
 
       .close-modal {
         margin-left: 12px;
@@ -96,6 +133,10 @@ html, body, ul, li, p, div, input {
     .search-wrapper input::placeholder {
       color: lightgray;
       font-weight: 200;
+    }
+
+    #mobile-stage {
+      display: none;
     }
 
     #bio {
@@ -138,4 +179,71 @@ html, body, ul, li, p, div, input {
     .footer ul {
       list-style-type: none;
       padding-left: 0;
+      a {
+        text-decoration: none;
+      }
+    }
+
+
+    // mobile styles
+    @media screen and (max-width: 600px) {
+
+      #mobile-header {
+        display:block;
+        width:100%;
+        background-color: $site-color;
+        padding-top: 24px;
+        padding-bottom: 24px;
+
+        h1, p {
+          margin-top:0;
+          margin-bottom: 0;
+          color: white;
+          margin-left: 50px;
+
+        }
+
+        h1 {
+          font-family: Georgia, serif;
+          font-style: italic;
+        }
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+
+      }
+
+      .site-title-container { 
+        display:none;
+      }
+
+      #bio {
+        padding-bottom: 25px;
+      }
+
+      #mobile-stage {
+        width: 100%;
+        display: block;
+      }
+
+      #stage {
+        display:none;
+      }
+
+      .node-modal {
+        display:none;
+      }
+
+      .search-wrapper {
+        width: 100%;
+        margin-bottom: 150px;
+
+        .search-wrapper-inner {
+          margin-right:50px;
+        }
+
+      }
+
     }

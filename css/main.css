@@ -85,6 +85,30 @@ html, body, ul, li, p, div, input {
 a {
   color: #F24D29; }
 
+.site-title-container {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0; }
+  .site-title-container .site-title {
+    float: right;
+    border: 1px solid red;
+    margin-right: 50px;
+    margin-top: 50px;
+    background-color: #F24D29;
+    color: white;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+    .site-title-container .site-title p {
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 24px;
+      font-weight: bold; }
+    .site-title-container .site-title a {
+      color: white;
+      text-decoration: none; }
+
 .link {
   stroke: #aaa; }
 
@@ -105,6 +129,9 @@ circle.degree-0 {
 .search-wrapper {
   width: 40%;
   float: left; }
+
+#mobile-header {
+  display: none; }
 
 #stage {
   width: 60%;
@@ -159,6 +186,9 @@ body.loading .modal {
   color: lightgray;
   font-weight: 200; }
 
+#mobile-stage {
+  display: none; }
+
 #bio {
   padding-bottom: 150px; }
   #bio .artist-bio {
@@ -191,7 +221,49 @@ body.loading .modal {
 .footer ul {
   list-style-type: none;
   padding-left: 0; }
+  .footer ul a {
+    text-decoration: none; }
 
+@media screen and (max-width: 600px) {
+  #mobile-header {
+    display: block;
+    width: 100%;
+    background-color: #F24D29;
+    padding-top: 24px;
+    padding-bottom: 24px; }
+    #mobile-header h1, #mobile-header p {
+      margin-top: 0;
+      margin-bottom: 0;
+      color: white;
+      margin-left: 50px; }
+    #mobile-header h1 {
+      font-family: Georgia, serif;
+      font-style: italic; }
+    #mobile-header a {
+      color: white;
+      text-decoration: none; }
+
+  .site-title-container {
+    display: none; }
+
+  #bio {
+    padding-bottom: 25px; }
+
+  #mobile-stage {
+    width: 100%;
+    display: block; }
+
+  #stage {
+    display: none; }
+
+  .node-modal {
+    display: none; }
+
+  .search-wrapper {
+    width: 100%;
+    margin-bottom: 150px; }
+    .search-wrapper .search-wrapper-inner {
+      margin-right: 50px; } }
 .about {
   width: 80%;
   margin-top: 50px;
