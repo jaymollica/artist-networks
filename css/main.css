@@ -85,6 +85,10 @@ html, body, ul, li, p, div, input {
 a {
   color: #F24D29; }
 
+input {
+  border-radius: 0;
+  padding-left: 0; }
+
 .site-title-container {
   position: fixed;
   z-index: 1000;

@@ -197,7 +197,7 @@ $(function() {
                     const simulation = d3.forceSimulation(nodes)
                         .force("link", d3.forceLink(links).id(d => d.id).distance(60))
                         .force("charge", d3.forceManyBody())
-                        .force("center", d3.forceCenter(width / 2, 450));
+                        .force("center", d3.forceCenter(width / 2, height / 2));
 
                     const svg = d3.create("svg")
                         .attr("viewBox", [0, 0, width, height]);
@@ -238,7 +238,7 @@ $(function() {
                             return color;
                         })
                         .attr("class", function(e) { 
-                            return "degree-"+e.group;
+                            return "node degree-"+e.group;
                         })
                         .on("click", showModal )
                         .call(drag(simulation));
@@ -295,15 +295,26 @@ $(function() {
                             .attr("y2", d => d.target.y);
 
                         node
-                            .attr("cx", d => d.x)
-                            .attr("cy", d => d.y);
+                            .attr("cx", function(d) { 
+                                return d.x = Math.max(5, Math.min(width - 5, d.x)); 
+                            })
+                            .attr("cy", function(d) { 
+                                return d.y = Math.max(5, Math.min(height - 5, d.y));
+                            });
                     });
 
                     return svg.node();
                 }
 
-                height = 900;
-                width = 900;
+                if (/Mobi|Android/i.test(navigator.userAgent)) {
+                    // different stage dimensions if on mobile
+                    height = 500;
+                    width = 500;
+                }
+                else {
+                    height = 700;
+                    width = 900;
+                }
 
                 color = function() {
                     const scale = d3.scaleOrdinal(d3.schemeCategory10);
