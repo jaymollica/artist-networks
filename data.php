@@ -63,19 +63,27 @@
   }
   elseif(isset($_GET['bacon'])) {
 
-    $bacon = array(
-      500009666, //picasso
-      500006031, //warhol
+    $b = array(
+      500115393, //duchamp
+      //500004441, // demuth (connects duchamp and stieg)
+      500024301, //stieg
+      //500018666, //okeefe
     );
 
-    $ulan1 = $bacon[0];
-    $ulan2 = $bacon[1];
+    // 500015030 // man ray
 
-    $b = $nw->baconator($ulan1, $ulan2);
+    $ulan1 = $b[0];
+    $ulan2 = $b[1];
 
-    error_log(print_r($b,true));
+    $bacon = $nw->baconator($ulan1, $ulan2);
 
-    echo json_encode($b);
+    array_unshift($bacon, (int)$ulan1);
+
+    $bacon = array_filter($bacon);
+
+    $b = $nw->prepareBacon($bacon, $ulan1);
+
+    echo json_encode($bacon);
 
   }
 

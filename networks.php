@@ -27,10 +27,6 @@
 
     }
 
-    public function blendNetworks($network1, $network2) {
-
-    }
-
     // get name of relationship
     // returns str
     public function getRelationshipName($relationship_id) {
@@ -243,166 +239,170 @@
 
     // gets the degrees of separation between two artists given two ulans
     // returns an int [1-6]
-    // public function baconator($left_artist, $right_artist) {
-    //   $max_depth = 4;
+    public function baconator($source_artist, $target_artist) {
+      $max_depth = 4;
 
-    //   if($left_artist == $right_artist) {
-    //     return $left_artist;
-    //   }
+      if($source_artist == $target_artist) {
+        return "same artist";
+      }
 
-    //   $left = array();
-    //   $right = array();
+      $source_list = array();
+      $target_list = array();
 
-    //   $left[$left_artist] = array();
-    //   $right[$right_artist] = array();
+      $source_list[$source_artist] = null;
+      $target_list[$target_artist] = null;
 
-    //   $center_artists = $this->blendNetworks($left_artist, $right_artist, $left_members, $right_members);
+      $connecting_artists = $this->findConnections($source_artist, $target_artist, $source_list, $target_list);
 
-    //   if ( empty($center_artists) ) {
-    //     return "These artists are over ".$max_depth." degrees apart.";
-    //   }
+      if(empty($connecting_artists)) {
+        return null;
+      }
+      error_log("CONNECT");
+      error_log(print_r($connecting_artists, true));
 
-    
+      foreach($connecting_artists AS $c) {
+        $connections = array((int)$c);
+        $connecting_artist = $c;
 
-    // // for center_artist in center_artists:
-    // //     connections = [center_artist]
-    // //     #print("center artist", center_artist)
-    // //     artist = center_artist
-    // //     while left[artist] != None:
-    // //         artist = left[artist]
-    // //         connections.insert(0, artist)
-            
-    // //     artist = center_artist
-    // //     while right[artist] != None:
-    // //         artist = right[artist]
-    // //         connections.append(artist)
-    // //     print("AHHHH", center_artist, connections, "degrees: ", len(connections) - 1)
+        foreach($source_list AS $key => $val) {
+          if($key == $connecting_artist) {
+            array_unshift($connections, (int)$val);
+          }
+        }
 
+        $connecting_artist = $c;
+        foreach($target_list AS $key => $val) {
+          error_log("for each 2");
+          if($key == $connecting_artist) {
+            array_push($connections, (int)$val);
+          }
+        }
+      }
 
-    //   return $center_artists;
+      return $connections;
 
-    // }
+    }
 
-    // // def do_things(in_left_artist, in_right_artist, left, right):
-    // // left_artists = [(1, in_left_artist)]
-    // // right_artists = [(1, in_right_artist)]
-    // // while len(left_artists) > 0 or len(right_artists) > 0:
-    // //     print("while", left_artists, right_artists)
-    // //     return_val = []
-    // //     if len(left_artists) > 0:
-    // //         depth, left_artist = left_artists.pop(0)
-    // //         if depth > MAX_DEPTH:
-    // //             print("max depth!!!")
-    // //             return None
-    // //         left_network = get_network(left_artist)
+    public function findConnections($init_source_ulan, $init_target_ulan, &$source_list, &$target_list, $max_depth=3) {
 
-    // //         print("left network", depth, left_network)
-    // //         for artist in left_network:
-    // //             if artist not in left:
-    // //                 left[artist] = left_artist
-    // //                 left_artists.append((depth + 1, artist))
-    // //             if artist in right:
-    // //                 return_val.append(artist)
-    // //     if len(return_val) > 0:
-    // //         return return_val
-    // //     if len(right_artists) > 0:
-    // //         depth, right_artist = right_artists.pop(0)
-    // //         if depth > MAX_DEPTH:
-    // //             print("max depth!!!")
-    // //             return None
-    // //         right_network = get_network(right_artist)
+      $source_ulans = array(
+        array($init_source_ulan, 0),
+      );
 
-    // //         print("right network", depth, right_network)
-    // //         for artist in right_network:
-    // //             if artist not in right:
-    // //                 right[artist] = right_artist
-    // //                 right_artists.append((depth + 1, artist))
-    // //             if artist in left:
-    // //                 return_val.append(artist)
-    // //     if len(return_val) > 0:
-    // //         return return_val
-    // // return None
+      $target_ulans = array(
+        array($init_target_ulan, 0),
+      );
 
-    // public function blendNetworks($left_artist, $right_artist, $left_members, $right_members, $max_depth = 4) {
+      while (count($source_ulans) > 0 || count($target_ulans) > 0) {
+      
+        $return_ulans = array();
 
-    //   $left_artists = array( 
-    //     array(1, $left_members),
-    //   );
+        if(count($source_ulans) > 0) {
+          $removed = array_shift($source_ulans);
+          $new_source_ulan = $removed[0];
+          $depth = $removed[1];
 
-    //   $right_artists = array(
-    //     array(1, $right_members),
-    //   );
+          if($depth > $max_depth) {
+            return null;
+          }
 
-    //   while ( count($left_artists) > 0 || count($right_artists) > 0 ) {
-    //     print ("while");
-    //     $return_array = array();
+          $source_network = $this->getNetwork($new_source_ulan);
+          foreach($source_network AS $sn) {
+            $related_ulan = $sn['related_ulan'];
+            if(!in_array($related_ulan, $source_list)) {
+              $source_list[$related_ulan] = $new_source_ulan;
+              $new_depth = $depth + 1;
+              $push_value = array(
+                $related_ulan, $new_depth
+              );
+              // keep the while loop going
+              array_push($source_ulans, $push_value);
+            }
+            if(in_array($related_ulan, $target_list)) {
+              array_push($return_ulans, $related_ulan);
+            }
+          }
+        }
 
-    //     if(count($left_artists) > 0) {
-    //       $removed = array_shift($left_artists);
-    //       $depth = $removed[0];
-    //       $la = $removed[1];
+        if(count($return_ulans) > 0) {
+          return $return_ulans;
+        }
 
-    //       if($depth == $max_depth) {
-    //         return array();
-    //       }
+        if(count($target_ulans) > 0) {
+          $removed = array_shift($target_ulans);
+          $new_target_ulan = $removed[0];
+          $depth = $removed[1];
 
-    //       $left_network = $this->getNetwork($la);
-    //       foreach ($left_network AS $ln) {
-    //         $left_ulan = $ln['artist_ulan'];
-    //         if(in_array($left_ulan, $left)) {
-    //           $left[$left_ulan] = $left_artist;
-    //           array_push( $left_artists, array($depth++, $left_ulan) );
-    //           if(in_array($left_ulan, $right)) {
-    //             array_push($return_array, $left_ulan);
-    //           }
-    //         }
+          if($depth > $max_depth) {
+            return null;
+          }
 
-    //         if(count($return_array > 0)) {
-    //           return $return_array;
-    //         }
-            
-    //       }
+          $target_network = $this->getNetwork($new_target_ulan);
+          foreach($target_network AS $tn) {
+            $related_ulan = $tn['related_ulan'];
+            if(!in_array($related_ulan, $target_list)) {
+              $target_list[$related_ulan] = $new_target_ulan;
+              $new_depth = $depth + 1;
+              $push_value = array(
+                $related_ulan, $new_depth
+              );
+              array_push($target_ulans, $push_value);
+            }
+            if(in_array($related_ulan, $source_list)) {
+              array_push($return_ulans, $related_ulan);
+            }
+          }
+        }
 
-    //     }
+        if(count($return_ulans) > 0) {
+          return $return_ulans;
+        }
 
-    //     if(count($right_artists) > 0) {
-    //       $removed = array_shift($right_artists);
-    //       $depth = $removed[0];
-    //       $ra = $removed[1];
+      }
+      
+      return null;
 
-    //       if($depth == $max_depth) {
-    //         return array();
-    //       }
+    }
 
-    //       $right_network = $this->getNetwork($ra);
-    //       foreach ($left_network AS $ln) {
-    //         $left_ulan = $ln['artist_ulan'];
-    //         if(in_array($left_ulan, $left)) {
-    //           $left[$left_ulan] = $left_artist;
-    //           array_push( $left_artists, array($depth++, $left_ulan) );
-    //           if(in_array($left_ulan, $right)) {
-    //             array_push($return_array, $left_ulan);
-    //           }
-    //         }
+    public function prepareBacon($bacon, $source_ulan) {
 
-    //         if(count($return_array > 0)) {
-    //           return $return_array;
-    //         }
-            
-    //       }
+      $rels = array();
 
-    //     }
+      foreach($bacon AS $b) {
 
+        $diff = array_diff($bacon, array($b));
 
-    //   }
+        foreach($diff AS $d) {
 
+          $data = array(
+            'b' => $b,
+            'd' => $d,
+          );
 
+          error_log($b);
+          error_log($d);
 
-    //   return array();
-    // }
+          $sql = "SELECT * FROM artist_relationships WHERE artist_ulan=:b AND related_ulan=:d";
+          $stmt = $this->pdo->prepare($sql);
+          $stmt->execute($data);
+          $relationships = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // is one artist in the other artists network?
-    // returns boolean
+          if(!empty($relationships)) {
+            array_push($rels, $relationships[0]);
+          }
+
+        }
+
+      }
+
+      $vis = $this->prepareNetworkForVisualization($rels, $source_ulan);
+
+      error_log(print_r($vis,true));
+
+      return;
+
+    }
+
     public function isInNetwork($ulan1, $ulan2, $maxDegree = 1) {
 
     }
