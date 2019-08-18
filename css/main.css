@@ -83,7 +83,7 @@ html, body, ul, li, p, div, input {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 a {
-  color: #F24D29; }
+  color: #b50938; }
 
 input {
   border-radius: 0;
@@ -96,10 +96,9 @@ input {
   right: 0; }
   .site-title-container .site-title {
     float: right;
-    border: 1px solid red;
     margin-right: 50px;
     margin-top: 50px;
-    background-color: #F24D29;
+    background-color: #b50938;
     color: white;
     padding-left: 24px;
     padding-right: 24px;
@@ -127,7 +126,7 @@ input {
 
 circle.degree-0 {
   r: 5px;
-  stroke: #F24D29;
+  stroke: #b50938;
   stroke-width: 5px; }
 
 .search-wrapper {
@@ -186,6 +185,9 @@ body.loading .modal {
   border-bottom: 2px solid black;
   font-weight: 400; }
 
+.search-wrapper input.long {
+  font-size: 24px; }
+
 .search-wrapper input::placeholder {
   color: lightgray;
   font-weight: 200; }
@@ -232,7 +234,7 @@ body.loading .modal {
   #mobile-header {
     display: block;
     width: 100%;
-    background-color: #F24D29;
+    background-color: #b50938;
     padding-top: 24px;
     padding-bottom: 24px; }
     #mobile-header h1, #mobile-header p {
@@ -289,6 +291,49 @@ body.loading .modal {
     font-size: 16px;
     color: gray; }
 
+.bacon-container {
+  margin-top: 200px; }
+  .bacon-container #baconForm {
+    padding: 0 50px; }
+  .bacon-container .bacon-div {
+    width: 50%;
+    text-align: center; }
+  .bacon-container .input-wrapper-left {
+    padding-right: 25px; }
+  .bacon-container .input-wrapper-right {
+    padding-left: 25px; }
+  .bacon-container .bacon-1-autosuggest {
+    position: relative;
+    z-index: 5000; }
+  .bacon-container .bacon-submit {
+    text-align: center; }
+    .bacon-container .bacon-submit button {
+      margin-top: 50px;
+      background-color: #b50938;
+      color: white;
+      font-size: 24px;
+      padding: 12px 24px;
+      border: 0; }
+  .bacon-container button:disabled,
+  .bacon-container button[disabled] {
+    background-color: #F8F9F9;
+    color: white; }
+  .bacon-container .preamble {
+    padding-left: 50px;
+    padding-right: 50px; }
+
+@media screen and (max-width: 600px) {
+  .bacon-container {
+    margin-top: 0; }
+    .bacon-container .bacon-div {
+      width: 100%;
+      float: left; }
+    .bacon-container .search-wrapper {
+      margin-top: 25px;
+      margin-bottom: 25px; }
+    .bacon-container .input-wrapper-left,
+    .bacon-container .input-wrapper-right {
+      padding: 0; } }
 /* ==========================================================================
    Helper classes
    ========================================================================== */

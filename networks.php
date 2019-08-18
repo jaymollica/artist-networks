@@ -397,9 +397,7 @@
 
       $vis = $this->prepareNetworkForVisualization($rels, $source_ulan);
 
-      error_log(print_r($vis,true));
-
-      return;
+      return $vis;
 
     }
 

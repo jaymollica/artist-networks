@@ -37,26 +37,36 @@
   <![endif]-->
 
   <!-- Add your site or application content here -->
-  <div class="container">
+  <div class="bacon-container">
     <div id="mobile-header">
       <h1><a href="/">Medias Res</a></h1>
       <p>Explore the social networks of artists</p>
     </div>
-    <div class="search-wrapper">
-      <div class="search-wrapper-inner">
-        <form id="searchNetworks">
-          <input type="text" class="network-search-box" id="hint" placeholder="Type to search..." />
-          <input type="hidden" id="searchUlan" value="" />
-        </form>
-        <ul id="suggestion-results" class="suggestion-list"></ul>
-        <div id="bio">
-          <p class="artist-bio">Search for an artist to explore their social network.</p><p>Not sure where to start? Try <a href="#" class="artist-link" id="500018666">Georgia O&rsquo;Keefe</a> or <a href="#" class="artist-link" id="500009666">Pablo Picasso</a>.
+    <div class="preamble">
+      <p>Enter the names of two artists to see how many degrees of separation there are between them.</p>
+    </div>
+    <form id="baconForm">
+      <div class="source-input bacon-div search-wrapper">
+        <div class="input-wrapper-left">
+          <input type="text" class="network-search-box" id="bacon-hint1" placeholder="Type to search..." />
+          <input type="hidden" id="searchUlan1" value="" />
+          <ul id="bacon-1-autosuggest">
+          </ul>
         </div>
       </div>
-    </div>
-    <div class="modal">
-    </div>
-    <div id="stage">
+      <div class="target-input bacon-div search-wrapper">
+        <div class="input-wrapper-right">
+          <input type="text" class="network-search-box" id="bacon-hint2" placeholder="Type to search..." />
+          <input type="hidden" id="searchUlan2" value="" />
+          <ul id="bacon-2-autosuggest">
+          </ul>
+        </div>
+      </div>
+      <div class="bacon-submit">
+        <a href="#" id="submitBacon">Find connections...</a>
+      </div>
+    </form>
+    <div id="bacon-stage">
     </div>
   </div>
   <div class="footer">
@@ -71,6 +81,8 @@
     </div>
   </div>
 
+  <div class="modal"></div>
+  
   <div class="site-title-container">
     <div class="site-title">
       <p><a href="/">Medias Res</a></p>

@@ -1,5 +1,8 @@
 
-  $site-color: #F24D29;
+  //$site-color: #F24D29;
+  $site-color: #b50938;
+  $site-color-light: #E895AB;
+  $footer-bg: #F8F9F9;
   $box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
     html, body, ul, li, p, div, input {
@@ -23,7 +26,6 @@
 
       .site-title {
         float: right;
-        border: 1px solid red;
         margin-right: 50px;
         margin-top: 50px;
         background-color: $site-color;
@@ -135,6 +137,10 @@
       font-weight: 400;
     }
 
+    .search-wrapper input.long {
+      font-size: 24px;
+    }
+
     .search-wrapper input::placeholder {
       color: lightgray;
       font-weight: 200;
@@ -173,7 +179,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      background-color: #F8F9F9;
+      background-color: $footer-bg;
       border-top: 1px solid #C4CFD0;
       color: black;
       text-align: left;
@@ -188,7 +194,6 @@
         text-decoration: none;
       }
     }
-
 
     // mobile styles
     @media screen and (max-width: 600px) {
