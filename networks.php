@@ -238,7 +238,6 @@
     }
 
     // gets the degrees of separation between two artists given two ulans
-    // returns an int [1-6]
     public function baconator($source_artist, $target_artist) {
       $max_depth = 4;
 
