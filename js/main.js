@@ -86,11 +86,9 @@ $(function() {
         }
 
         if( artist.length > lenLimit ) {
-            console.log("add class");
             $("#hint").addClass( "long" );
         }
         else {
-            console.log("remove class");
             $("#hint").removeClass( "long" );
         }
 
@@ -289,12 +287,9 @@ $(function() {
                             if(e.group == 0) {
                                 color = "white";
                             } else if(e.group == 1) {
-                                color = "#B50938";
-                                //color = "#F24D29";
-                                //color = "#1DACE8";
+                                color = "#D1362F";
                             } else if(e.group == 2) {
-                                //color = "#F7B0AA";
-                                color = "#E895AB";
+                                color = "#E6908C";
                             } else if(e.group == 3) {
                                 color = "#C4CFD0"
                             }
@@ -477,11 +472,9 @@ $(function() {
                             if(e.group == 0) {
                                 color = "white";
                             } else if(e.group == 1) {
-                                color = "#AB5E73";
-                                //color = "#F24D29";
-                                //color = "#1DACE8";
+                                color = "#D1362F";
                             } else if(e.group == 2) {
-                                color = "#F7B0AA";
+                                color = "#E6908C";
                             } else if(e.group == 3) {
                                 color = "#C4CFD0"
                             }
@@ -618,8 +611,6 @@ $(function() {
 
                     if(data.length == 0) {
                         
-                        console.log("no results");
-
                     } else {
 
                         $.each(data, function( index, value ) {

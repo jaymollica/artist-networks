@@ -7,6 +7,8 @@
   <title>Medias Res: Explore the social networks of artists</title>
   <meta name="title" content="Medias Res: Explore the social networks of artists">
   <meta name="description" content="In medias res is Latin for “in the middle of things” and is used to describe a story that picks up somewhere in between the beginning and the end of events. This site is meant to illustrate that great artists often emerge out of preexisting movements or influences before going on to change culture and, in turn, influence future artists.">
+  <meta name="author" content="Jay Mollica">
+
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -50,7 +52,7 @@
         </form>
         <ul id="suggestion-results" class="suggestion-list"></ul>
         <div id="bio">
-          <p class="artist-bio">Search for an artist to explore their social network.</p><p>Not sure where to start? Try <a href="#" class="artist-link" id="500018666">Georgia O&rsquo;Keefe</a> or <a href="#" class="artist-link" id="500009666">Pablo Picasso</a>.
+          <p class="artist-bio">Search for an artist to explore their social network.</p><p>Not sure where to start? Try <a href="#" class="artist-link" id="500018666">Georgia O&rsquo;Keeffe</a> or <a href="#" class="artist-link" id="500009666">Pablo Picasso</a>.
         </div>
       </div>
     </div>

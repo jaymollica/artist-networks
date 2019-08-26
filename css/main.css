@@ -83,7 +83,7 @@ html, body, ul, li, p, div, input {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 a {
-  color: #b50938; }
+  color: #D1362F; }
 
 input {
   border-radius: 0;
@@ -98,7 +98,7 @@ input {
     float: right;
     margin-right: 50px;
     margin-top: 50px;
-    background-color: #b50938;
+    background-color: #D1362F;
     color: white;
     padding-left: 24px;
     padding-right: 24px;
@@ -126,7 +126,7 @@ input {
 
 circle.degree-0 {
   r: 5px;
-  stroke: #b50938;
+  stroke: #D1362F;
   stroke-width: 5px; }
 
 .search-wrapper {
@@ -234,7 +234,7 @@ body.loading .modal {
   #mobile-header {
     display: block;
     width: 100%;
-    background-color: #b50938;
+    background-color: #D1362F;
     padding-top: 24px;
     padding-bottom: 24px; }
     #mobile-header h1, #mobile-header p {
@@ -309,7 +309,7 @@ body.loading .modal {
     text-align: center; }
     .bacon-container .bacon-submit button {
       margin-top: 50px;
-      background-color: #b50938;
+      background-color: #D1362F;
       color: white;
       font-size: 24px;
       padding: 12px 24px;
