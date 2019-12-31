@@ -82,8 +82,12 @@ textarea {
 html, body, ul, li, p, div, input {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
+body {
+  background-color: black;
+  color: white; }
+
 a {
-  color: #D1362F; }
+  color: white; }
 
 input {
   border-radius: 0;
@@ -98,19 +102,16 @@ input {
     float: right;
     margin-right: 50px;
     margin-top: 50px;
-    background-color: #D1362F;
+    background-color: black;
     color: white;
-    padding-left: 24px;
-    padding-right: 24px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-    .site-title-container .site-title p {
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-size: 24px;
-      font-weight: bold; }
+    border: 1px solid white; }
     .site-title-container .site-title a {
       color: white;
-      text-decoration: none; }
+      text-decoration: none;
+      padding: 24px;
+      line-height: 48px; }
+    .site-title-container .site-title img {
+      max-width: 150px; }
 
 .link {
   stroke: #aaa; }
@@ -120,13 +121,13 @@ input {
   cursos: pointer; }
 
 .node circle {
-  stroke: #fff;
+  stroke: black;
   stroke-width: 3px;
-  fill: #555; }
+  fill: white; }
 
 circle.degree-0 {
   r: 5px;
-  stroke: #D1362F;
+  stroke: white;
   stroke-width: 5px; }
 
 .search-wrapper {
@@ -155,7 +156,7 @@ our animation centered, and no-repeating */
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(255, 255, 255, 0.8) url("../img/loading.gif") 50% 50% no-repeat; }
+  background: rgba(0, 0, 0, 0.8) 50% 50% no-repeat; }
 
 /* When the body has the loading class, we turn
    the scrollbar off with overflow:hidden */
@@ -172,24 +173,31 @@ body.loading .modal {
   padding: 12px;
   z-index: 10000;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+  .node-modal a {
+    color: black; }
   .node-modal .close-modal {
     margin-left: 12px;
     font-size: 24px;
     color: gray;
     text-decoration: none; }
 
+.search-wrapper {
+  margin-bottom: 124px; }
+
 .search-wrapper input {
   width: 100%;
   font-size: 36px;
   border: none;
-  border-bottom: 2px solid black;
-  font-weight: 400; }
+  border-bottom: 2px solid white;
+  font-weight: 400;
+  background-color: black;
+  color: white; }
 
 .search-wrapper input.long {
   font-size: 24px; }
 
 .search-wrapper input::placeholder {
-  color: lightgray;
+  color: gray;
   font-weight: 200; }
 
 #mobile-stage {
@@ -213,30 +221,30 @@ body.loading .modal {
   padding-left: 0; }
 
 .footer {
-  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #F8F9F9;
-  border-top: 1px solid #C4CFD0;
+  background-color: black;
+  border-top: 1px solid #adacac;
   color: black;
   text-align: left;
   height: 150px;
-  padding-left: 50px; }
+  padding-left: 50px;
+  color: white;
+  display: flex; }
 
 .footer ul {
   list-style-type: none;
   padding-left: 0; }
-  .footer ul a {
-    text-decoration: none; }
 
 @media screen and (max-width: 600px) {
   #mobile-header {
     display: block;
     width: 100%;
-    background-color: #D1362F;
+    background-color: black;
     padding-top: 24px;
-    padding-bottom: 24px; }
+    padding-bottom: 24px;
+    border-bottom: 1px solid white; }
     #mobile-header h1, #mobile-header p {
       margin-top: 0;
       margin-bottom: 0;
@@ -271,7 +279,7 @@ body.loading .modal {
     .search-wrapper .search-wrapper-inner {
       margin-right: 50px; } }
 .about {
-  width: 80%;
+  width: 70%;
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto;
@@ -284,12 +292,12 @@ body.loading .modal {
     font-size: 24px; }
   .about blockquote p {
     font-size: 36px;
-    color: gray;
+    color: lightgray;
     font-style: italic; }
   .about blockquote footer {
     text-align: right;
     font-size: 16px;
-    color: gray; }
+    color: lightgray; }
 
 .bacon-container {
   margin-top: 200px; }
@@ -298,6 +306,8 @@ body.loading .modal {
   .bacon-container .bacon-div {
     width: 50%;
     text-align: center; }
+  .bacon-container .search-wrapper {
+    margin-bottom: 0; }
   .bacon-container .input-wrapper-left {
     padding-right: 25px; }
   .bacon-container .input-wrapper-right {
@@ -309,18 +319,21 @@ body.loading .modal {
     text-align: center; }
     .bacon-container .bacon-submit button {
       margin-top: 50px;
-      background-color: #D1362F;
+      background-color: black;
       color: white;
       font-size: 24px;
       padding: 12px 24px;
-      border: 0; }
+      border: 1px solid white;
+      cursor: pointer; }
   .bacon-container button:disabled,
   .bacon-container button[disabled] {
-    background-color: #F8F9F9;
+    background-color: #f7f5f5;
     color: white; }
   .bacon-container .preamble {
     padding-left: 50px;
     padding-right: 50px; }
+  .bacon-container .footer {
+    margin-top: 148px; }
 
 @media screen and (max-width: 600px) {
   .bacon-container {

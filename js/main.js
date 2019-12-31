@@ -262,7 +262,7 @@ $(function() {
                         .attr("viewBox", [0, 0, width, height]);
 
                     const link = svg.append("g")
-                        .attr("stroke", "#999")
+                        .attr("stroke", "gray")
                         .attr("stroke-opacity", 0.6)
                         .selectAll("line")
                         .data(links)
@@ -270,7 +270,7 @@ $(function() {
                         .attr("stroke-width", d => Math.sqrt(d.value));
 
                     const node = svg.append("g")
-                        .attr("stroke", "white")
+                        .attr("stroke", "gray")
                         .attr("stroke-width", 1.5)
                         .selectAll("circle")
                         .data(nodes)
@@ -283,15 +283,15 @@ $(function() {
                             return r;
                         })
                         .attr("fill", function(e) {
-                            var color = "lightgray";
+                            var color = "white";
                             if(e.group == 0) {
-                                color = "white";
+                                color = "black";
                             } else if(e.group == 1) {
-                                color = "#D1362F";
+                                color = "white";
                             } else if(e.group == 2) {
-                                color = "#E6908C";
+                                color = "gray";
                             } else if(e.group == 3) {
-                                color = "#C4CFD0"
+                                color = "lightgray"
                             }
                             return color;
                         })
@@ -441,7 +441,7 @@ $(function() {
                     const simulation = d3.forceSimulation(nodes)
                         .force("link", d3.forceLink(links).id(d => d.id).distance(60))
                         .force("charge", d3.forceManyBody())
-                        .force("center", d3.forceCenter(50, 50));
+                        .force("center", d3.forceCenter(width/2, height/2));
 
                     const svg = d3.create("svg")
                         .attr("viewBox", [0, 0, width, height]);
