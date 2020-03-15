@@ -399,11 +399,6 @@
 
     }
 
-
-    public function getPaths() {
-
-    }
-
     public function breadthFirstSearch($source_ulan, $target_ulan) {
 
       if($source_ulan == $target_ulan) {
@@ -529,11 +524,14 @@
         error_log(print_r($unvisited_backward,true));
 
         foreach ($unvisited_forward as $k => $v) {
-          if(in_array($uf, $unvisited_backward)) {
-            $paths_from_source = get_paths($unvisited_forward, $visited_forward);
-            $paths_from_target = get_paths()
+
+          if(in_array($v, $unvisited_backward)) {
+            $paths_from_source = $this->get_paths($unvisited_forward[$k], $visited_forward);
+            $paths_from_target = $this->get_paths($unvisited_backward[$k], $visited_backward);
+
+
+
           }
-          # code...
         }
 
 
@@ -550,13 +548,21 @@
         //         if current_path not in paths:
         //           paths.append(current_path)
 
-        break; //while
+        $i = 0;
 
+        if($i > 6){
+          break;
+        }
+
+        $i++;
       }
 
     }
 
     public function getPaths($ulans, $visited) {
+      error_log("GET PATHS");
+      error_log(print_r($ulans,true));
+      error_log(print_r($visited,true));
       $paths = array();
 
       return $paths;
