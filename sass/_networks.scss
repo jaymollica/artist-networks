@@ -34,17 +34,43 @@
         float: right;
         margin-right: 50px;
         margin-top: 50px;
-        background-color: black;
+        background-color: transparent;
         color: white;
-        border: 1px solid white;
-        a {
+        h1 {
+          text-align: right;
+          margin-right: -4px;
+          font-family: "Georgia";
+          font-weight: bold;
+          font-size: 22px;
+          margin: 0;
           color: white;
+          padding: 22px;
+          padding-bottom: 0;
+          line-height: 44px;
+          letter-spacing: 4px;
+        }
+        a {
           text-decoration: none;
-          padding: 24px;
-          line-height: 48px;
         }
         img {
           max-width:150px;
+        }
+      }
+    }
+
+    .sub-menu {
+      list-style-type: none;
+      color: white;
+      float: right;
+      padding-right: 28px;
+      margin-top: 0;
+      li {
+        display: inline;
+        justify-content: right;
+        padding-left: 12px;
+        a {
+          text-transform: uppercase;
+          border-bottom: 2px solid white;
         }
       }
     }

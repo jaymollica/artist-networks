@@ -256,8 +256,7 @@
       if(empty($connecting_artists)) {
         return null;
       }
-      error_log("CONNECT");
-      error_log(print_r($connecting_artists, true));
+      
 
       foreach($connecting_artists AS $c) {
         $connections = array((int)$c);
@@ -271,7 +270,6 @@
 
         $connecting_artist = $c;
         foreach($target_list AS $key => $val) {
-          error_log("for each 2");
           if($key == $connecting_artist) {
             array_push($connections, (int)$val);
           }
@@ -378,9 +376,6 @@
             'd' => $d,
           );
 
-          error_log($b);
-          error_log($d);
-
           $sql = "SELECT * FROM artist_relationships WHERE artist_ulan=:b AND related_ulan=:d";
           $stmt = $this->pdo->prepare($sql);
           $stmt->execute($data);
@@ -403,6 +398,170 @@
     public function isInNetwork($ulan1, $ulan2, $maxDegree = 1) {
 
     }
+
+
+    public function getPaths() {
+
+    }
+
+    public function breadthFirstSearch($source_ulan, $target_ulan) {
+
+      if($source_ulan == $target_ulan) {
+        return $source_ulan;
+      }
+
+      $paths = array();
+
+      # The unvisited dictionaries are a mapping from page ID to a list of that page's parents' IDs.
+      # None signifies that the source and target pages have no parent.
+      $unvisited_forward = array(
+        $source_ulan => array()
+      );
+
+      $unvisited_backward = array(
+        $target_ulan => array()
+      );
+
+      # The visited dictionaries are a mapping from page ID to a list of that page's parents' IDs.
+      $visited_forward = array();
+      $visited_backward = array();
+
+      # Set the initial forward and backward depths to 0.
+      $forward_depth = 0;
+      $backward_depth = 0;
+
+      # Continue the breadth first search until a path has been found or either of the unvisited lists
+      # are empty.
+      while ( (count($paths) == 0) &&  (count($unvisited_forward) != 0) && (count($unvisited_backward) != 0) ) {
+        # Run the next iteration of the breadth first search in whichever direction has the smaller number
+        # of links at the next level.
+        $forward_links_count = 0;
+        foreach ($unvisited_forward as $key => $value) {
+          error_log("forward foreach");
+          $c = count($this->getNetwork($key) );
+          $forward_links_count += $c;
+        }
+
+        $backward_links_count = 0;
+        foreach ($unvisited_backward as $key => $value) {
+          $c = count($this->getNetwork($key) );
+          $backward_links_count += $c;
+        }
+
+        if ($forward_links_count < $backward_links_count) {
+          #---  FORWARD BREADTH FIRST SEARCH  ---#
+          $forward_depth++;
+
+          # Fetch the pages which can be reached from the currently unvisited forward pages.
+          # The replace() bit is some hackery to handle Python printing a trailing ',' when there is
+          # only one key.
+          $outgoing_links = array();
+          foreach ($unvisited_forward as $key => $value) {
+            $n = $this->getNetwork($key);
+            foreach (array_column($n,'related_ulan') as $k => $v) {
+              array_push($outgoing_links, array($key, $v) );
+            }
+          }
+
+          # Mark all of the unvisited forward pages as visited.
+          foreach ($unvisited_forward as $ulan => $val) {
+            $visited_forward[$ulan] = $unvisited_forward[$ulan];
+          }
+
+          # Clear the unvisited forward dictionary.
+          $unvisited_forward = array();
+
+          foreach ($outgoing_links AS $key => $val) {
+            $s = $val[0]; // target ulan
+            $t = $val[1];
+            if( (!in_array($t, $visited_forward)) && (!in_array($t, $unvisited_forward)) ) {
+              $unvisited_backward[$t] = [$source_ulan];
+            }
+            elseif (in_array($t, $unvisited_forward)) {
+              array_push($unvisited_forward[$t], $source_ulan);
+            }
+          }
+        }
+        else {
+          error_log("backward search");
+          #---  BACKWARD BREADTH FIRST SEARCH  ---#
+
+          $backward_depth++;
+
+          # Fetch the pages which can reach the currently unvisited backward pages.
+          $incoming_links = array();
+          foreach ($unvisited_backward as $key => $value) {
+            $n = $this->getNetwork($key);
+            foreach (array_column($n,'related_ulan') as $k => $v) {
+              array_push($incoming_links, array($key, $v) );
+            }
+          }
+
+          $incoming_links = array_values($incoming_links);
+
+          # Mark all of the unvisited backward pages as visited.
+          foreach ($unvisited_backward as $ulan => $val) {
+            $visited_backward[$ulan] = $unvisited_backward[$ulan];
+          }
+
+          # Clear the unvisited backward dictionary.
+          $unvisited_backward = array();
+
+          foreach ($incoming_links AS $key => $val) {
+            $t = $val[0]; // target ulan
+            $s = $val[1];
+            if( (!in_array($s, $visited_backward)) && (!in_array($s, $unvisited_backward)) ) {
+              $unvisited_backward[$s] = [$target_ulan];
+            }
+            elseif (in_array($s, $unvisited_backward)) {
+              array_push($unvisited_backward[$s], $target_ulan);
+            }
+          }
+
+        }
+
+        #---  CHECK FOR PATH COMPLETION  ---#
+        # The search is complete if any of the pages are in both unvisited backward and unvisited, so
+        # find the resulting paths.
+        error_log("unvisited_forward");
+        error_log(print_r($unvisited_forward,true));
+        error_log("unvisited_backward");
+        error_log(print_r($unvisited_backward,true));
+
+        foreach ($unvisited_forward as $k => $v) {
+          if(in_array($uf, $unvisited_backward)) {
+            $paths_from_source = get_paths($unvisited_forward, $visited_forward);
+            $paths_from_target = get_paths()
+          }
+          # code...
+        }
+
+
+        // for page_id in unvisited_forward:
+        //   if page_id in unvisited_backward:
+        //     paths_from_source = get_paths(unvisited_forward[page_id], visited_forward)
+        //     paths_from_target = get_paths(unvisited_backward[page_id], visited_backward)
+
+        //     for path_from_source in paths_from_source:
+        //       for path_from_target in paths_from_target:
+        //         current_path = list(path_from_source) + [page_id] + list(reversed(path_from_target))
+
+        //         # TODO: This line shouldn't be required, but there are some unexpected duplicates.
+        //         if current_path not in paths:
+        //           paths.append(current_path)
+
+        break; //while
+
+      }
+
+    }
+
+    public function getPaths($ulans, $visited) {
+      $paths = array();
+
+      return $paths;
+    }
+
 
   }
 

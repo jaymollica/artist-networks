@@ -78,15 +78,15 @@
     // $ulan1 = 500009666;
     // $ulan2 = 500002941;
 
-    $bacon = $nw->baconator($ulan1, $ulan2);
+    $bacon = $nw->breadthFirstSearch($ulan1, $ulan2);
 
-    array_unshift($bacon, (int)$ulan1);
+    // array_unshift($bacon, (int)$ulan1);
 
-    $bacon = array_filter($bacon);
+    // $bacon = array_filter($bacon);
 
-    $b = $nw->prepareBacon($bacon, $ulan1);
+    // $b = $nw->prepareBacon($bacon, $ulan1);
 
-    echo json_encode($b);
+    // echo json_encode($b);
 
   }
 
