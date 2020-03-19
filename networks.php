@@ -470,10 +470,10 @@
             $s = $val[0]; // target ulan
             $t = $val[1];
             if( (!in_array($t, $visited_forward)) && (!in_array($t, $unvisited_forward)) ) {
-              $unvisited_backward[$t] = [$source_ulan];
+              $unvisited_backward[$t] = [$s];
             }
             elseif (in_array($t, $unvisited_forward)) {
-              array_push($unvisited_forward[$t], $source_ulan);
+              array_push($unvisited_forward[$t], $s);
             }
           }
         }
@@ -506,10 +506,10 @@
             $t = $val[0]; // target ulan
             $s = $val[1];
             if( (!in_array($s, $visited_backward)) && (!in_array($s, $unvisited_backward)) ) {
-              $unvisited_backward[$s] = [$target_ulan];
+              $unvisited_backward[$s] = [$t];
             }
             elseif (in_array($s, $unvisited_backward)) {
-              array_push($unvisited_backward[$s], $target_ulan);
+              array_push($unvisited_backward[$s], $t);
             }
           }
 
@@ -525,7 +525,7 @@
 
         foreach ($unvisited_forward as $k => $v) {
 
-          if(in_array($v, $unvisited_backward)) {
+          if( array_key_exists($k, $unvisited_backward) ) {
             $paths_from_source = $this->get_paths($unvisited_forward[$k], $visited_forward);
             $paths_from_target = $this->get_paths($unvisited_backward[$k], $visited_backward);
 
@@ -548,13 +548,13 @@
         //         if current_path not in paths:
         //           paths.append(current_path)
 
-        $i = 0;
+        // $i = 0;
 
-        if($i > 6){
-          break;
-        }
+        // if($i > 20){
+        //   break;
+        // }
 
-        $i++;
+        // $i++;
       }
 
     }
