@@ -288,7 +288,7 @@
             }
             error_log("left checking for " . $n_artist["related_ulan"] . " in: ");
             error_log(print_r($right, true));;
-            if ( array_key_exists($n_artist["related_ulan"], $right) && $right[$n_artist["related_ulan"]] != "" ) {
+            if ( array_key_exists($n_artist["related_ulan"], $right) ) {
               error_log("left found in right found it!!!");
               array_push($return_val, $n_artist["related_ulan"]);
             }
@@ -329,7 +329,7 @@
             }
             error_log("right checking for " . $n_artist["related_ulan"] . " in: ");
             error_log(print_r($left, true));
-            if ( array_key_exists($n_artist["related_ulan"], $left) && $left[$n_artist["related_ulan"]] != "") {
+            if ( array_key_exists($n_artist["related_ulan"], $left) ) {
               error_log("right found in left it!!!");
               array_push($return_val, $n_artist["related_ulan"]);
             }
