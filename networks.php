@@ -237,8 +237,41 @@
 
     }
 
-    private function _breadthFristSearch($source_ulan, $target_ulan, &$left, &$right) {
+
+    private function _breathFirstInner($tag, &$source, &$target, &$artists, &$return_val) {
       $max_depth = 20;
+      $artist = array_pop($artists);
+      $ulan = $artist["ulan"];
+      $depth = $artist["depth"];
+      if ($depth > $max_depth) {
+        error_log(" too much depth");
+        return [];
+      }
+
+      $network = $this->getNetwork($ulan);
+      foreach ($network as $n_artist) {
+
+        if ( !array_key_exists($n_artist["related_ulan"], $source) ) {
+          $source[$n_artist["related_ulan"]] = $ulan;
+          array_push($artists, [
+            "depth" => $depth + 1,
+            "ulan" => $n_artist["related_ulan"],
+          ]);
+
+        }
+        else {
+          // do nothing
+        }
+        if ( array_key_exists($n_artist["related_ulan"], $target) ) {
+          array_push($return_val, $n_artist["related_ulan"]);
+        }
+      }
+    }
+
+
+    private function _breadthFristSearch($source_ulan, $target_ulan, &$left, &$right) {
+      error_log("start  hello source " . $source_ulan . " target " . $target_ulan );
+      
       $left_artists = [
         "info" => [
           "depth" => 1,
@@ -256,35 +289,7 @@
       while ( count($left_artists) > 0 && count($right_artists) > 0 ) {
         $return_val = array();
         if ( count($left_artists) > 0 ) {
-          
-          $artist = array_pop($left_artists);
-          $ulan = $artist["ulan"];
-          $depth = $artist["depth"];
-          if ($depth > $max_depth) {
-            error_log("too much deptth");
-            return [];
-          }
-
-          $network = $this->getNetwork($ulan);
-          foreach ($network as $n_artist) {
-
-            if ( !array_key_exists($n_artist["related_ulan"], $left) ) {
-              $left[$n_artist["related_ulan"]] = $ulan;
-              array_push($left_artists, [
-                "depth" => $depth + 1,
-                "ulan" => $n_artist["related_ulan"],
-              ]);
-
-            }
-            else {
-              //do nothing
-            }
-            
-            if ( array_key_exists($n_artist["related_ulan"], $right) ) {
-              array_push($return_val, $n_artist["related_ulan"]);
-            }
-
-          }
+          $this->_breathFirstInner("left", $left, $right, $left_artists, $return_val);
         }
 
         if ( count($return_val) > 0 ) {
@@ -292,32 +297,7 @@
         }
 
         if ( count($right_artists) > 0 ) {
-          
-          $artist = array_pop($right_artists);
-          $ulan = $artist["ulan"];
-          $depth = $artist["depth"];
-          if ($depth > $max_depth) {
-            return [];
-          }
-          $network = $this->getNetwork($ulan);
-          foreach ($network as $n_artist) {
-
-            if ( !array_key_exists($n_artist["related_ulan"], $right) ) {
-              $right[$n_artist["related_ulan"]] = $ulan;
-              array_push($right_artists, [
-                "depth" => $depth + 1,
-                "ulan" => $n_artist["related_ulan"],
-              ]);
-
-            }
-            else {
-              // do nothing
-            }
-            
-            if ( array_key_exists($n_artist["related_ulan"], $left) ) {
-              array_push($return_val, $n_artist["related_ulan"]);
-            }
-          }
+          $this->_breathFirstInner("right", $right, $left, $right_artists, $return_val);
         }
 
         if ( count($return_val) > 0 ) {
