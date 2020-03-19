@@ -237,326 +237,152 @@
 
     }
 
-    // gets the degrees of separation between two artists given two ulans
-    public function baconator($source_artist, $target_artist) {
-      $max_depth = 4;
 
-      if($source_artist == $target_artist) {
-        return "same artist";
-      }
+    private function _breadthFristSearch($source_ulan, $target_ulan, &$left, &$right) {
+      error_log("start  hello source " . $source_ulan . " target " . $target_ulan );
+      $max_depth = 6;
+      $left_artists = [
+        "info" => [
+          "depth" => 1,
+          "ulan" => $source_ulan,
+        ],
+      ];
 
-      $source_list = array();
-      $target_list = array();
+      $right_artists = [
+        "info" => [
+          "depth" => 1,
+          "ulan" => $target_ulan,
+        ],
+      ];
 
-      $source_list[$source_artist] = null;
-      $target_list[$target_artist] = null;
-
-      $connecting_artists = $this->findConnections($source_artist, $target_artist, $source_list, $target_list);
-
-      if(empty($connecting_artists)) {
-        return null;
-      }
-      
-
-      foreach($connecting_artists AS $c) {
-        $connections = array((int)$c);
-        $connecting_artist = $c;
-
-        foreach($source_list AS $key => $val) {
-          if($key == $connecting_artist) {
-            array_unshift($connections, (int)$val);
-          }
-        }
-
-        $connecting_artist = $c;
-        foreach($target_list AS $key => $val) {
-          if($key == $connecting_artist) {
-            array_push($connections, (int)$val);
-          }
-        }
-      }
-
-      return $connections;
-
-    }
-
-    public function findConnections($init_source_ulan, $init_target_ulan, &$source_list, &$target_list, $max_depth=3) {
-
-      $source_ulans = array(
-        array($init_source_ulan, 0),
-      );
-
-      $target_ulans = array(
-        array($init_target_ulan, 0),
-      );
-
-      while (count($source_ulans) > 0 || count($target_ulans) > 0) {
-      
-        $return_ulans = array();
-
-        if(count($source_ulans) > 0) {
-          $removed = array_shift($source_ulans);
-          $new_source_ulan = $removed[0];
-          $depth = $removed[1];
-
-          if($depth > $max_depth) {
-            return null;
+      while ( count($left_artists) > 0 && count($right_artists) > 0 ) {
+        error_log("while hello!!!!");
+        $return_val = array();
+        if ( count($left_artists) > 0 ) {
+          
+          $artist = array_pop($left_artists);
+          $ulan = $artist["ulan"];
+          $depth = $artist["depth"];
+          error_log("left!!!! " . $artist["ulan"] . " : " . $depth . " : " . count($right));
+          if ($depth > $max_depth) {
+            error_log(" max depth reached!!!");
+            return [];
           }
 
-          $source_network = $this->getNetwork($new_source_ulan);
-          foreach($source_network AS $sn) {
-            $related_ulan = $sn['related_ulan'];
-            if(!in_array($related_ulan, $source_list)) {
-              $source_list[$related_ulan] = $new_source_ulan;
-              $new_depth = $depth + 1;
-              $push_value = array(
-                $related_ulan, $new_depth
-              );
-              // keep the while loop going
-              array_push($source_ulans, $push_value);
+          $network = $this->getNetwork($ulan);
+          error_log("left network!!!! ");
+          foreach ($network as $n_artist) {
+            error_log("left found artist " . $n_artist["related_ulan"]);
+
+            if ( !array_key_exists($n_artist["related_ulan"], $left) ) {
+              error_log("left adding artist ");
+              $left[$n_artist["related_ulan"]] = $ulan;
+              array_push($left_artists, [
+                "depth" => $depth + 1,
+                "ulan" => $n_artist["related_ulan"],
+              ]);
+
             }
-            if(in_array($related_ulan, $target_list)) {
-              array_push($return_ulans, $related_ulan);
+            else {
+              error_log("existing left key! ");
             }
+            error_log("left checking for " . $n_artist["related_ulan"] . " in: ");
+            error_log(print_r($right, true));;
+            if ( array_key_exists($n_artist["related_ulan"], $right) && $right[$n_artist["related_ulan"]] != "" ) {
+              error_log("left found in right found it!!!");
+              array_push($return_val, $n_artist["related_ulan"]);
+            }
+
           }
         }
 
-        if(count($return_ulans) > 0) {
-          return $return_ulans;
+        if ( count($return_val) > 0 ) {
+          return $return_val;
         }
 
-        if(count($target_ulans) > 0) {
-          $removed = array_shift($target_ulans);
-          $new_target_ulan = $removed[0];
-          $depth = $removed[1];
-
-          if($depth > $max_depth) {
-            return null;
+        if ( count($right_artists) > 0 ) {
+          
+          $artist = array_pop($right_artists);
+          $ulan = $artist["ulan"];
+          $depth = $artist["depth"];
+          error_log("right!!!! " . $artist["ulan"] . " : " . $depth . " : " . count($left));
+          if ($depth > $max_depth) {
+            error_log(" max depth reached!!!");
+            return [];
           }
+          $network = $this->getNetwork($ulan);
+          error_log("right network!!!! ");
+          foreach ($network as $n_artist) {
+            error_log("right found artist" . $n_artist["related_ulan"]);
 
-          $target_network = $this->getNetwork($new_target_ulan);
-          foreach($target_network AS $tn) {
-            $related_ulan = $tn['related_ulan'];
-            if(!in_array($related_ulan, $target_list)) {
-              $target_list[$related_ulan] = $new_target_ulan;
-              $new_depth = $depth + 1;
-              $push_value = array(
-                $related_ulan, $new_depth
-              );
-              array_push($target_ulans, $push_value);
+            if ( !array_key_exists($n_artist["related_ulan"], $right) ) {
+              error_log("right adding artist ");
+              $right[$n_artist["related_ulan"]] = $ulan;
+              array_push($right_artists, [
+                "depth" => $depth + 1,
+                "ulan" => $n_artist["related_ulan"],
+              ]);
+
             }
-            if(in_array($related_ulan, $source_list)) {
-              array_push($return_ulans, $related_ulan);
+            else {
+              error_log("existing right key! ");
+            }
+            error_log("right checking for " . $n_artist["related_ulan"] . " in: ");
+            error_log(print_r($left, true));
+            if ( array_key_exists($n_artist["related_ulan"], $left) && $left[$n_artist["related_ulan"]] != "") {
+              error_log("right found in left it!!!");
+              array_push($return_val, $n_artist["related_ulan"]);
             }
           }
         }
 
-        if(count($return_ulans) > 0) {
-          return $return_ulans;
+        if ( count($return_val) > 0 ) {
+          return $return_val;
         }
-
       }
-      
-      return null;
-
-    }
-
-    public function prepareBacon($bacon, $source_ulan) {
-
-      $rels = array();
-
-      foreach($bacon AS $b) {
-
-        $diff = array_diff($bacon, array($b));
-
-        foreach($diff AS $d) {
-
-          $data = array(
-            'b' => $b,
-            'd' => $d,
-          );
-
-          $sql = "SELECT * FROM artist_relationships WHERE artist_ulan=:b AND related_ulan=:d";
-          $stmt = $this->pdo->prepare($sql);
-          $stmt->execute($data);
-          $relationships = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-          if(!empty($relationships)) {
-            array_push($rels, $relationships[0]);
-          }
-
-        }
-
-      }
-
-      $vis = $this->prepareNetworkForVisualization($rels, $source_ulan);
-
-      return $vis;
-
-    }
-
-    public function isInNetwork($ulan1, $ulan2, $maxDegree = 1) {
-
+      return [];
     }
 
     public function breadthFirstSearch($source_ulan, $target_ulan) {
+      error_log("hello!!!!");
 
       if($source_ulan == $target_ulan) {
-        return $source_ulan;
+        return [];
       }
 
-      $paths = array();
+      $left = [
+        $source_ulan => "",
+      ];
 
-      # The unvisited dictionaries are a mapping from page ID to a list of that page's parents' IDs.
-      # None signifies that the source and target pages have no parent.
-      $unvisited_forward = array(
-        $source_ulan => array()
-      );
+      $right = [
+        $target_ulan => "",
+      ];
 
-      $unvisited_backward = array(
-        $target_ulan => array()
-      );
+      $centers = $this->_breadthFristSearch($source_ulan, $target_ulan, $left, $right);
 
-      # The visited dictionaries are a mapping from page ID to a list of that page's parents' IDs.
-      $visited_forward = array();
-      $visited_backward = array();
-
-      # Set the initial forward and backward depths to 0.
-      $forward_depth = 0;
-      $backward_depth = 0;
-
-      # Continue the breadth first search until a path has been found or either of the unvisited lists
-      # are empty.
-      while ( (count($paths) == 0) &&  (count($unvisited_forward) != 0) && (count($unvisited_backward) != 0) ) {
-        # Run the next iteration of the breadth first search in whichever direction has the smaller number
-        # of links at the next level.
-        $forward_links_count = 0;
-        foreach ($unvisited_forward as $key => $value) {
-          error_log("forward foreach");
-          $c = count($this->getNetwork($key) );
-          $forward_links_count += $c;
+      $return_val = [];
+      error_log("centers " . print_r($centers, true) );
+      error_log(print_r($left, true));
+      error_log(print_r($right, true));
+      foreach ($centers as $center_artist) {
+        $connections = [$center_artist];
+        $artist = $center_artist;
+        while ( array_key_exists($artist, $left) && $left[$artist] != "" ) {
+          $artist = $left[$artist];
+          array_splice($connections, 0, 0, $artist);
         }
-
-        $backward_links_count = 0;
-        foreach ($unvisited_backward as $key => $value) {
-          $c = count($this->getNetwork($key) );
-          $backward_links_count += $c;
+        $artist = $center_artist;
+        while( array_key_exists($artist, $right) && $right[$artist] != "" ) {
+          $artist = $right[$artist];
+          array_push($connections, $artist);
         }
-
-        if ($forward_links_count < $backward_links_count) {
-          #---  FORWARD BREADTH FIRST SEARCH  ---#
-          $forward_depth++;
-
-          # Fetch the pages which can be reached from the currently unvisited forward pages.
-          # The replace() bit is some hackery to handle Python printing a trailing ',' when there is
-          # only one key.
-          $outgoing_links = array();
-          foreach ($unvisited_forward as $key => $value) {
-            $n = $this->getNetwork($key);
-            foreach (array_column($n,'related_ulan') as $k => $v) {
-              array_push($outgoing_links, array($key, $v) );
-            }
-          }
-
-          # Mark all of the unvisited forward pages as visited.
-          foreach ($unvisited_forward as $ulan => $val) {
-            $visited_forward[$ulan] = $unvisited_forward[$ulan];
-          }
-
-          # Clear the unvisited forward dictionary.
-          $unvisited_forward = array();
-
-          foreach ($outgoing_links AS $key => $val) {
-            $s = $val[0]; // target ulan
-            $t = $val[1];
-            if( (!in_array($t, $visited_forward)) && (!in_array($t, $unvisited_forward)) ) {
-              $unvisited_backward[$t] = [$s];
-            }
-            elseif (in_array($t, $unvisited_forward)) {
-              array_push($unvisited_forward[$t], $s);
-            }
-          }
-        }
-        else {
-          error_log("backward search");
-          #---  BACKWARD BREADTH FIRST SEARCH  ---#
-
-          $backward_depth++;
-
-          # Fetch the pages which can reach the currently unvisited backward pages.
-          $incoming_links = array();
-          foreach ($unvisited_backward as $key => $value) {
-            $n = $this->getNetwork($key);
-            foreach (array_column($n,'related_ulan') as $k => $v) {
-              array_push($incoming_links, array($key, $v) );
-            }
-          }
-
-          $incoming_links = array_values($incoming_links);
-
-          # Mark all of the unvisited backward pages as visited.
-          foreach ($unvisited_backward as $ulan => $val) {
-            $visited_backward[$ulan] = $unvisited_backward[$ulan];
-          }
-
-          # Clear the unvisited backward dictionary.
-          $unvisited_backward = array();
-
-          foreach ($incoming_links AS $key => $val) {
-            $t = $val[0]; // target ulan
-            $s = $val[1];
-            if( (!in_array($s, $visited_backward)) && (!in_array($s, $unvisited_backward)) ) {
-              $unvisited_backward[$s] = [$t];
-            }
-            elseif (in_array($s, $unvisited_backward)) {
-              array_push($unvisited_backward[$s], $t);
-            }
-          }
-
-        }
-
-        #---  CHECK FOR PATH COMPLETION  ---#
-        # The search is complete if any of the pages are in both unvisited backward and unvisited, so
-        # find the resulting paths.
-        error_log("unvisited_forward");
-        error_log(print_r($unvisited_forward,true));
-        error_log("unvisited_backward");
-        error_log(print_r($unvisited_backward,true));
-
-        foreach ($unvisited_forward as $k => $v) {
-
-          if( array_key_exists($k, $unvisited_backward) ) {
-            $paths_from_source = $this->get_paths($unvisited_forward[$k], $visited_forward);
-            $paths_from_target = $this->get_paths($unvisited_backward[$k], $visited_backward);
-
-
-
-          }
-        }
-
-
-        // for page_id in unvisited_forward:
-        //   if page_id in unvisited_backward:
-        //     paths_from_source = get_paths(unvisited_forward[page_id], visited_forward)
-        //     paths_from_target = get_paths(unvisited_backward[page_id], visited_backward)
-
-        //     for path_from_source in paths_from_source:
-        //       for path_from_target in paths_from_target:
-        //         current_path = list(path_from_source) + [page_id] + list(reversed(path_from_target))
-
-        //         # TODO: This line shouldn't be required, but there are some unexpected duplicates.
-        //         if current_path not in paths:
-        //           paths.append(current_path)
-
-        // $i = 0;
-
-        // if($i > 20){
-        //   break;
-        // }
-
-        // $i++;
+        array_push($return_val, [
+          "connections" => $connections,
+          "degrees" => count( $connections ),
+        ]);
       }
 
+      return $return_val;
     }
 
     public function getPaths($ulans, $visited) {
@@ -567,7 +393,6 @@
 
       return $paths;
     }
-
 
   }
 

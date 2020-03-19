@@ -79,12 +79,7 @@
     // $ulan2 = 500002941;
 
     $bacon = $nw->breadthFirstSearch($ulan1, $ulan2);
-
-    // array_unshift($bacon, (int)$ulan1);
-
-    // $bacon = array_filter($bacon);
-
-    // $b = $nw->prepareBacon($bacon, $ulan1);
+    print_r($bacon);
 
     // echo json_encode($b);
 
