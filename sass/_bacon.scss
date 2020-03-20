@@ -1,9 +1,14 @@
+$leftcolor: #f96167;
+$rightcolor: #fce77d; 
+
+
 .bacon-container {
 
   margin-top: 200px;
 
   #baconForm {
     padding: 0 50px;
+    margin-bottom: 24px;
   }
 
   #bacon-stage {
@@ -46,6 +51,26 @@
       cursor: pointer;
     } 
   }
+
+  #bacon-hint1 {
+    border-bottom: 2px solid $leftcolor;
+  }
+
+  #bacon-hint2 {
+    border-bottom: 2px solid $rightcolor;
+  }
+
+  circle.node.bacon.degree-0 {
+      r: 5px;
+      stroke: $leftcolor;
+      stroke-width: 5px;
+    }
+
+    circle.node.bacon.max {
+      r: 5px;
+      stroke: $rightcolor;
+      stroke-width: 5px;
+    }
 
   #bacon-1-autosuggest,
   #bacon-2-autosuggest {

@@ -152,11 +152,6 @@ circle.degree-0 {
   stroke: white;
   stroke-width: 5px; }
 
-circle.node.max {
-  r: 5px;
-  stroke: white;
-  stroke-width: 5px; }
-
 .search-wrapper {
   width: 40%;
   float: left; }
@@ -329,7 +324,8 @@ body.loading .modal {
 .bacon-container {
   margin-top: 200px; }
   .bacon-container #baconForm {
-    padding: 0 50px; }
+    padding: 0 50px;
+    margin-bottom: 24px; }
   .bacon-container #bacon-stage {
     height: 1000px;
     width: 90%;
@@ -356,6 +352,18 @@ body.loading .modal {
       padding: 12px 24px;
       border: 1px solid white;
       cursor: pointer; }
+  .bacon-container #bacon-hint1 {
+    border-bottom: 2px solid #f96167; }
+  .bacon-container #bacon-hint2 {
+    border-bottom: 2px solid #fce77d; }
+  .bacon-container circle.node.bacon.degree-0 {
+    r: 5px;
+    stroke: #f96167;
+    stroke-width: 5px; }
+  .bacon-container circle.node.bacon.max {
+    r: 5px;
+    stroke: #fce77d;
+    stroke-width: 5px; }
   .bacon-container #bacon-1-autosuggest,
   .bacon-container #bacon-2-autosuggest {
     list-style-type: none;

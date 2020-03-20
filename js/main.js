@@ -418,6 +418,9 @@ $(function() {
 
     // fetch data and build bacon visualization
     $("form#baconForm").submit(function (e) {
+
+        console.log("bacon sub");
+
         e.preventDefault();
         var ulan1 = $("#searchUlan1").val();
         var ulan2 = $("#searchUlan2").val();
@@ -483,36 +486,25 @@ $(function() {
                         })
                         .attr("fill", function(e) {
 
-                            // for (let i = 0; i < node_num; i++) {
-                            //   if (d.group === i) {
-                            //     return i * width / node_num;
-                            //   }
-                            //   else {
-                            //     continue;
-                            //   }
-                            // }
-
-
                             var color = "black";
                             if(e.group == 0) {
                                 color = "white";
 
-                            } else if(e.group == 1) {
+                            } else if(e.group == max_group) {
+                                color = "white";
+                            } else  {
                                 color = "black";
-                            } else if(e.group == 2) {
-                                color = "black";
-                            } else if(e.group == 3) {
-                                color = "black"
-                            }
+                            } 
+
                             return color;
                         })
                         .attr("class", function(e) { 
 
                             if(e.group === max_group) {
-                                return "node max degree-"+e.group;
+                                return "node bacon max degree-"+e.group;
                             }
                             else {
-                                return "node degree-"+e.group;
+                                return "node bacon degree-"+e.group;
                             }
                             
                         })
@@ -584,7 +576,7 @@ $(function() {
                     width = 200;
                 }
                 else {
-                    height = 1000;
+                    height = 300;
                     width = 1000;
                 }
 
