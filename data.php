@@ -70,7 +70,7 @@
     $bacon = $nw->breadthFirstSearch($ulan1, $ulan2);
 
     // prepare the bacon array for visualization
-    $diagram = $nw->prepareBacon($bacon);
+    $diagram = $nw->prepareBacon($bacon, $ulan1, $ulan2);
 
     echo json_encode($diagram);
 

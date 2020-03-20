@@ -263,7 +263,7 @@
         if ( array_key_exists($n_ulan, $target) && !in_array($n_ulan, $return_val) ) {
           array_push($return_val, $n_ulan);
           // error_log("max depth from " . $max_depth . " to " . ($depth + 1));
-          $max_depth = min($max_depth, $depth + 1);
+          $max_depth = min($max_depth, $depth);
         }
       }
     }
@@ -348,7 +348,7 @@
       return $return_val;
     }
 
-    public function prepareBacon($bacon) {
+    public function prepareBacon($bacon, $ulan1, $ulan2) {
 
       $nodes = array();
       $links = array();
@@ -365,9 +365,16 @@
 
         foreach($val['connections'] as $k => $v) {
 
+          $is_target_node = false;
+
+          if($v == $ulan2) {
+            $is_target_node = true;
+          }
+
           $new_node = array(
             'id' => $v,
             'group' => $i,
+            'target' => $is_target_node,
             'artist' => $this->getArtistByUlan($v),
           );
 

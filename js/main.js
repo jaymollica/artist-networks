@@ -9,6 +9,7 @@ $(function() {
 
     $('#submitBacon').on("click", function() {
         $("#baconForm").submit();
+        return;
     });
 
     $( "input[type='text']" ).on('input',function(e){
@@ -419,8 +420,6 @@ $(function() {
     // fetch data and build bacon visualization
     $("form#baconForm").submit(function (e) {
 
-        console.log("bacon sub");
-
         e.preventDefault();
         var ulan1 = $("#searchUlan1").val();
         var ulan2 = $("#searchUlan2").val();
@@ -490,7 +489,7 @@ $(function() {
                             if(e.group == 0) {
                                 color = "white";
 
-                            } else if(e.group == max_group) {
+                            } else if(e.target == true) {
                                 color = "white";
                             } else  {
                                 color = "black";
@@ -500,7 +499,7 @@ $(function() {
                         })
                         .attr("class", function(e) { 
 
-                            if(e.group === max_group) {
+                            if(e.target === true) {
                                 return "node bacon max degree-"+e.group;
                             }
                             else {
