@@ -338,9 +338,6 @@ body.loading .modal {
     padding-right: 25px; }
   .bacon-container .input-wrapper-right {
     padding-left: 25px; }
-  .bacon-container .bacon-1-autosuggest {
-    position: relative;
-    z-index: 5000; }
   .bacon-container .bacon-submit {
     text-align: center; }
     .bacon-container .bacon-submit button {
