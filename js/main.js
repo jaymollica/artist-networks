@@ -418,6 +418,9 @@ $(function() {
 
     // fetch data and build bacon visualization
     $("form#baconForm").submit(function (e) {
+
+        console.log("bacon sub");
+
         e.preventDefault();
         var ulan1 = $("#searchUlan1").val();
         var ulan2 = $("#searchUlan2").val();
@@ -440,6 +443,8 @@ $(function() {
 
                     var node_num = nodes.length;
 
+                    var max_group = Math.max.apply(Math, nodes.map(function(o) { return o.group; }))
+                    
                     const simulation = d3.forceSimulation(nodes)
                         .force("link", d3.forceLink(links).id(d => d.id).distance(60))
                         .force("charge", d3.forceManyBody())
@@ -481,31 +486,27 @@ $(function() {
                         })
                         .attr("fill", function(e) {
 
-                            // for (let i = 0; i < node_num; i++) {
-                            //   if (d.group === i) {
-                            //     return i * width / node_num;
-                            //   }
-                            //   else {
-                            //     continue;
-                            //   }
-                            // }
-
-
                             var color = "black";
                             if(e.group == 0) {
                                 color = "white";
 
-                            } else if(e.group == 1) {
+                            } else if(e.group == max_group) {
+                                color = "white";
+                            } else  {
                                 color = "black";
-                            } else if(e.group == 2) {
-                                color = "black";
-                            } else if(e.group == 3) {
-                                color = "black"
-                            }
+                            } 
+
                             return color;
                         })
                         .attr("class", function(e) { 
-                            return "node degree-"+e.group;
+
+                            if(e.group === max_group) {
+                                return "node bacon max degree-"+e.group;
+                            }
+                            else {
+                                return "node bacon degree-"+e.group;
+                            }
+                            
                         })
                         .on("click", showModal )
                         .call(drag(simulation));

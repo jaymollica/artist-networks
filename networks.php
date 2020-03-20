@@ -238,32 +238,32 @@
     }
 
 
-    private function _breathFirstInner($tag, &$source, &$target, &$artists, &$return_val) {
-      $max_depth = 20;
-      $artist = array_pop($artists);
+    private function _breathFirstInner($tag, &$source, &$target, &$artists, &$return_val, &$max_depth) {
+      
+      $artist = array_shift($artists);
       $ulan = $artist["ulan"];
       $depth = $artist["depth"];
       if ($depth > $max_depth) {
-        error_log(" too much depth");
+        //error_log(" too much depth");
         return [];
       }
 
       $network = $this->getNetwork($ulan);
       foreach ($network as $n_artist) {
-
-        if ( !array_key_exists($n_artist["related_ulan"], $source) ) {
-          $source[$n_artist["related_ulan"]] = $ulan;
+        $n_ulan = $n_artist["related_ulan"];
+        if ( !array_key_exists($n_ulan, $source) ) {
+          $source[$n_ulan] = $ulan;
           array_push($artists, [
             "depth" => $depth + 1,
-            "ulan" => $n_artist["related_ulan"],
+            "ulan" => $n_ulan,
           ]);
 
         }
-        else {
-          // do nothing
-        }
-        if ( array_key_exists($n_artist["related_ulan"], $target) ) {
-          array_push($return_val, $n_artist["related_ulan"]);
+
+        if ( array_key_exists($n_ulan, $target) && !in_array($n_ulan, $return_val) ) {
+          array_push($return_val, $n_ulan);
+          // error_log("max depth from " . $max_depth . " to " . ($depth + 1));
+          $max_depth = min($max_depth, $depth + 1);
         }
       }
     }
@@ -271,7 +271,7 @@
 
     private function _breadthFristSearch($source_ulan, $target_ulan, &$left, &$right) {
       error_log("start  hello source " . $source_ulan . " target " . $target_ulan );
-      
+      $max_depth = 20;
       $left_artists = [
         "info" => [
           "depth" => 1,
@@ -285,26 +285,18 @@
           "ulan" => $target_ulan,
         ],
       ];
-
+      $return_val = array();
       while ( count($left_artists) > 0 && count($right_artists) > 0 ) {
-        $return_val = array();
+        
         if ( count($left_artists) > 0 ) {
-          $this->_breathFirstInner("left", $left, $right, $left_artists, $return_val);
-        }
-
-        if ( count($return_val) > 0 ) {
-          return $return_val;
+          $this->_breathFirstInner("left", $left, $right, $left_artists, $return_val, $max_depth);
         }
 
         if ( count($right_artists) > 0 ) {
-          $this->_breathFirstInner("right", $right, $left, $right_artists, $return_val);
-        }
-
-        if ( count($return_val) > 0 ) {
-          return $return_val;
+          $this->_breathFirstInner("right", $right, $left, $right_artists, $return_val, $max_depth);
         }
       }
-      return [];
+      return $return_val;
     }
 
     public function breadthFirstSearch($source_ulan, $target_ulan) {
@@ -324,23 +316,33 @@
       $centers = $this->_breadthFristSearch($source_ulan, $target_ulan, $left, $right);
 
       $return_val = [];
+      $path_keys = [
+        "" => false,
+      ];
       
       foreach ($centers as $center_artist) {
         $connections = [$center_artist];
         $artist = $center_artist;
+        $path_key = $center_artist;
         while ( array_key_exists($artist, $left) && $left[$artist] != "" ) {
           $artist = $left[$artist];
           array_splice($connections, 0, 0, $artist);
+          $path_key = $artist . $path_key;
         }
         $artist = $center_artist;
         while( array_key_exists($artist, $right) && $right[$artist] != "" ) {
           $artist = $right[$artist];
           array_push($connections, $artist);
+          $path_key = $path_key . $artist;
         }
-        array_push($return_val, [
-          "connections" => $connections,
-          "degrees" => count( $connections ),
-        ]);
+        if ( !array_key_exists($path_key, $path_keys) && count(array_unique($connections)) == count($connections) ) {
+          $path_keys[$path_key] = true;
+          array_push($return_val, [
+            "connections" => $connections,
+            "degrees" => count( $connections ),
+          ]);
+          // error_log("conn " . $path_key . " " . print_r($connections, true));
+        }
       }
 
       return $return_val;
@@ -352,12 +354,14 @@
       $links = array();
 
       $all_ulans = array();
+      $all_links = array();
 
       foreach($bacon as $key => $val) {
 
         $vc = count($val);
         $i = 0;
         $last = false;
+
 
         foreach($val['connections'] as $k => $v) {
 
@@ -368,14 +372,17 @@
           );
 
           if($last) {
+            $link_id = $v . "-" . $last;
+            if ( !array_key_exists($link_id, $all_links) ) {
+              $all_links[$link_id] = true;
+              $new_link = array(
+                'source' => $v,
+                'target' => $last,
+                'group' => 1,
+              );
 
-            $new_link = array(
-              'source' => $v,
-              'target' => $last,
-              'group' => 1,
-            );
-
-            array_push($links, $new_link);
+              array_push($links, $new_link);
+            }
 
           }
 
