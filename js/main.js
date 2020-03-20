@@ -442,6 +442,15 @@ $(function() {
 
                     var node_num = nodes.length;
 
+                    if(node_num === 0) {
+                        var noResults = $("<div/>");
+                            noResults.attr("class", "nobacon")
+                                .html("<p>No connections could be found, please try again.</p>");
+                        $("#bacon-stage").append(noResults);
+
+                        return;
+                    }
+
                     var max_group = Math.max.apply(Math, nodes.map(function(o) { return o.group; }))
                     
                     const simulation = d3.forceSimulation(nodes)
@@ -451,6 +460,16 @@ $(function() {
                             for (let i = 0; i < node_num; i++) {
                               if (d.group === i) {
                                 return i * width / node_num;
+                              }
+                              else {
+                                continue;
+                              }
+                            }
+                        }))
+                        .force("y", d3.forceY(function(d){
+                            for (let i = 0; i < node_num; i++) {
+                              if (d.group === i) {
+                                return i * height / node_num;
                               }
                               else {
                                 continue;
@@ -507,11 +526,18 @@ $(function() {
                             }
                             
                         })
-                        .on("click", showModal )
+                        .on("mouseenter", showModal )
+                        .on("mouseleave", hideModal )
                         .call(drag(simulation));
 
                     node.append("title")
                         .text(d => d.artist);
+
+                    function hideModal(e) {
+                        setTimeout(function () {
+                                $(".node-modal").fadeOut(800, function() { $(".node-modal").remove(); });
+                        }, 3000);
+                    }
 
                     function showModal(e) {
 
@@ -528,22 +554,13 @@ $(function() {
                                 })
                                .attr("class", "node-modal");
 
-                        var artistLink = $("<a/>");
+                        var artistLink = $("<p/>");
                             artistLink.bind("click", clickArtistModalLink)
-                                      .attr("href", "#")
-                                      .attr("class", "artist-link")
+                                      .attr("class", "artist-tooltip")
                                       .attr("id", e.id)
                                       .html(e.artist);
 
                         div.append(artistLink);
-
-                        var closeA = $("<a/>");
-                            closeA.bind("click", closeModal)
-                                  .attr("href", "#")
-                                  .attr("class", "close-modal")
-                                  .html("&times;");
-
-                        div.append(closeA);
 
                         $(".node-modal").remove();
                         $("body").append(div);
@@ -575,7 +592,7 @@ $(function() {
                     width = 200;
                 }
                 else {
-                    height = 300;
+                    height = 500;
                     width = 1000;
                 }
 

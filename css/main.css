@@ -195,7 +195,7 @@ body.loading .modal {
   padding: 12px;
   z-index: 10000;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
-  .node-modal a {
+  .node-modal a, .node-modal p {
     color: black; }
   .node-modal .close-modal {
     margin-left: 12px;
@@ -330,6 +330,10 @@ body.loading .modal {
     height: 1000px;
     width: 90%;
     margin: 0 auto; }
+  .bacon-container .artist-tooltip {
+    color: black; }
+  .bacon-container .nobacon {
+    text-align: center; }
   .bacon-container .bacon-div {
     width: 50%;
     text-align: center; }
