@@ -238,8 +238,8 @@
     }
 
 
-    private function _breathFirstInner($tag, &$source, &$target, &$artists, &$return_val) {
-      $max_depth = 7;
+    private function _breathFirstInner($tag, &$source, &$target, &$artists, &$return_val, &$max_depth) {
+      
       $artist = array_pop($artists);
       $ulan = $artist["ulan"];
       $depth = $artist["depth"];
@@ -251,7 +251,7 @@
       $network = $this->getNetwork($ulan);
       foreach ($network as $n_artist) {
         $n_ulan = $n_artist["related_ulan"];
-        if ($depth < $max_depth && !array_key_exists($n_ulan, $source) ) {
+        if ( !array_key_exists($n_ulan, $source) ) {
           $source[$n_ulan] = $ulan;
           array_push($artists, [
             "depth" => $depth + 1,
@@ -264,7 +264,7 @@
         }
         if ( array_key_exists($n_ulan, $target) && !in_array($n_ulan, $return_val) ) {
           array_push($return_val, $n_ulan);
-          break;
+          $max_depth = $depth;
         }
       }
     }
@@ -272,7 +272,7 @@
 
     private function _breadthFristSearch($source_ulan, $target_ulan, &$left, &$right) {
       error_log("start  hello source " . $source_ulan . " target " . $target_ulan );
-      
+      $max_depth = 10;
       $left_artists = [
         "info" => [
           "depth" => 1,
@@ -290,11 +290,11 @@
       while ( count($left_artists) > 0 && count($right_artists) > 0 ) {
         
         if ( count($left_artists) > 0 ) {
-          $this->_breathFirstInner("left", $left, $right, $left_artists, $return_val);
+          $this->_breathFirstInner("left", $left, $right, $left_artists, $return_val, $max_depth);
         }
 
         if ( count($right_artists) > 0 ) {
-          $this->_breathFirstInner("right", $right, $left, $right_artists, $return_val);
+          $this->_breathFirstInner("right", $right, $left, $right_artists, $return_val, $max_depth);
         }
       }
       return $return_val;
