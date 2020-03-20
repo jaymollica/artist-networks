@@ -355,7 +355,12 @@ body.loading .modal {
   .bacon-container #bacon-2-autosuggest {
     list-style-type: none;
     text-align: left;
-    padding-left: 0; }
+    padding-left: 0;
+    position: absolute;
+    z-index: 2000;
+    width: 42%;
+    background-color: black;
+    opacity: .8; }
   .bacon-container button:disabled,
   .bacon-container button[disabled] {
     background-color: #f7f5f5;

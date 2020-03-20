@@ -52,6 +52,12 @@
     list-style-type: none;
     text-align: left;
     padding-left: 0;
+    position: absolute;
+    z-index: 2000;
+    width: 42%;
+    background-color: black;
+    opacity: .8;
+
   }
 
   button:disabled,
