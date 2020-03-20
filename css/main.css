@@ -326,7 +326,7 @@ body.loading .modal {
   .bacon-container #baconForm {
     padding: 0 50px; }
   .bacon-container #bacon-stage {
-    height: 500px;
+    height: 1000px;
     width: 90%;
     margin: 0 auto; }
   .bacon-container .bacon-div {
