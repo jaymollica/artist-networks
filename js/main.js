@@ -440,6 +440,8 @@ $(function() {
 
                     var node_num = nodes.length;
 
+                    var max_group = Math.max.apply(Math, nodes.map(function(o) { return o.group; }))
+                    
                     const simulation = d3.forceSimulation(nodes)
                         .force("link", d3.forceLink(links).id(d => d.id).distance(60))
                         .force("charge", d3.forceManyBody())
@@ -505,7 +507,14 @@ $(function() {
                             return color;
                         })
                         .attr("class", function(e) { 
-                            return "node degree-"+e.group;
+
+                            if(e.group === max_group) {
+                                return "node max degree-"+e.group;
+                            }
+                            else {
+                                return "node degree-"+e.group;
+                            }
+                            
                         })
                         .on("click", showModal )
                         .call(drag(simulation));

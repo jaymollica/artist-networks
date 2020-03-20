@@ -152,6 +152,11 @@ circle.degree-0 {
   stroke: white;
   stroke-width: 5px; }
 
+circle.node.max {
+  r: 5px;
+  stroke: white;
+  stroke-width: 5px; }
+
 .search-wrapper {
   width: 40%;
   float: left; }
