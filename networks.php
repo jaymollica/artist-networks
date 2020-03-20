@@ -237,10 +237,8 @@
 
     }
 
-
     private function _breadthFristSearch($source_ulan, $target_ulan, &$left, &$right) {
-      error_log("start  hello source " . $source_ulan . " target " . $target_ulan );
-      $max_depth = 6;
+      $max_depth = 20;
       $left_artists = [
         "info" => [
           "depth" => 1,
@@ -256,26 +254,21 @@
       ];
 
       while ( count($left_artists) > 0 && count($right_artists) > 0 ) {
-        error_log("while hello!!!!");
         $return_val = array();
         if ( count($left_artists) > 0 ) {
           
           $artist = array_pop($left_artists);
           $ulan = $artist["ulan"];
           $depth = $artist["depth"];
-          error_log("left!!!! " . $artist["ulan"] . " : " . $depth . " : " . count($right));
           if ($depth > $max_depth) {
-            error_log(" max depth reached!!!");
+            error_log("too much deptth");
             return [];
           }
 
           $network = $this->getNetwork($ulan);
-          error_log("left network!!!! ");
           foreach ($network as $n_artist) {
-            error_log("left found artist " . $n_artist["related_ulan"]);
 
             if ( !array_key_exists($n_artist["related_ulan"], $left) ) {
-              error_log("left adding artist ");
               $left[$n_artist["related_ulan"]] = $ulan;
               array_push($left_artists, [
                 "depth" => $depth + 1,
@@ -284,12 +277,10 @@
 
             }
             else {
-              error_log("existing left key! ");
+              //do nothing
             }
-            error_log("left checking for " . $n_artist["related_ulan"] . " in: ");
-            error_log(print_r($right, true));;
+            
             if ( array_key_exists($n_artist["related_ulan"], $right) ) {
-              error_log("left found in right found it!!!");
               array_push($return_val, $n_artist["related_ulan"]);
             }
 
@@ -305,18 +296,13 @@
           $artist = array_pop($right_artists);
           $ulan = $artist["ulan"];
           $depth = $artist["depth"];
-          error_log("right!!!! " . $artist["ulan"] . " : " . $depth . " : " . count($left));
           if ($depth > $max_depth) {
-            error_log(" max depth reached!!!");
             return [];
           }
           $network = $this->getNetwork($ulan);
-          error_log("right network!!!! ");
           foreach ($network as $n_artist) {
-            error_log("right found artist" . $n_artist["related_ulan"]);
 
             if ( !array_key_exists($n_artist["related_ulan"], $right) ) {
-              error_log("right adding artist ");
               $right[$n_artist["related_ulan"]] = $ulan;
               array_push($right_artists, [
                 "depth" => $depth + 1,
@@ -325,12 +311,10 @@
 
             }
             else {
-              error_log("existing right key! ");
+              // do nothing
             }
-            error_log("right checking for " . $n_artist["related_ulan"] . " in: ");
-            error_log(print_r($left, true));
+            
             if ( array_key_exists($n_artist["related_ulan"], $left) ) {
-              error_log("right found in left it!!!");
               array_push($return_val, $n_artist["related_ulan"]);
             }
           }
@@ -344,7 +328,6 @@
     }
 
     public function breadthFirstSearch($source_ulan, $target_ulan) {
-      error_log("hello!!!!");
 
       if($source_ulan == $target_ulan) {
         return [];
@@ -361,9 +344,7 @@
       $centers = $this->_breadthFristSearch($source_ulan, $target_ulan, $left, $right);
 
       $return_val = [];
-      error_log("centers " . print_r($centers, true) );
-      error_log(print_r($left, true));
-      error_log(print_r($right, true));
+      
       foreach ($centers as $center_artist) {
         $connections = [$center_artist];
         $artist = $center_artist;
@@ -385,13 +366,59 @@
       return $return_val;
     }
 
-    public function getPaths($ulans, $visited) {
-      error_log("GET PATHS");
-      error_log(print_r($ulans,true));
-      error_log(print_r($visited,true));
-      $paths = array();
+    public function prepareBacon($bacon) {
 
-      return $paths;
+      $nodes = array();
+      $links = array();
+
+      $all_ulans = array();
+
+      foreach($bacon as $key => $val) {
+
+        $vc = count($val);
+        $i = 0;
+        $last = false;
+
+        foreach($val['connections'] as $k => $v) {
+
+          $new_node = array(
+            'id' => $v,
+            'group' => $i,
+            'artist' => $this->getArtistByUlan($v),
+          );
+
+          if($last) {
+
+            $new_link = array(
+              'source' => $v,
+              'target' => $last,
+              'group' => 1,
+            );
+
+            array_push($links, $new_link);
+
+          }
+
+          if( (!in_array($v, $all_ulans)) ) {
+            array_push($nodes, $new_node);
+            array_push($all_ulans, $v);
+          }
+
+          $last = $v;
+
+          $i++;
+
+        }
+
+      }
+
+      $nodes_links = array(
+        'nodes' => $nodes,
+        'links' => $links,
+      );
+
+      return $nodes_links;
+
     }
 
   }

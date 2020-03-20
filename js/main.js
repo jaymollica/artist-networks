@@ -438,9 +438,21 @@ $(function() {
                     const links = data.links.map(d => Object.create(d));
                     const nodes = data.nodes.map(d => Object.create(d));
 
+                    var node_num = nodes.length;
+
                     const simulation = d3.forceSimulation(nodes)
                         .force("link", d3.forceLink(links).id(d => d.id).distance(60))
                         .force("charge", d3.forceManyBody())
+                        .force("x", d3.forceX(function(d){
+                            for (let i = 0; i < node_num; i++) {
+                              if (d.group === i) {
+                                return i * width / node_num;
+                              }
+                              else {
+                                continue;
+                              }
+                            }
+                        }))
                         .force("center", d3.forceCenter(width/2, height/2));
 
                     const svg = d3.create("svg")
@@ -468,15 +480,27 @@ $(function() {
                             return r;
                         })
                         .attr("fill", function(e) {
-                            var color = "lightgray";
+
+                            // for (let i = 0; i < node_num; i++) {
+                            //   if (d.group === i) {
+                            //     return i * width / node_num;
+                            //   }
+                            //   else {
+                            //     continue;
+                            //   }
+                            // }
+
+
+                            var color = "black";
                             if(e.group == 0) {
                                 color = "white";
+
                             } else if(e.group == 1) {
-                                color = "#D1362F";
+                                color = "black";
                             } else if(e.group == 2) {
-                                color = "#E6908C";
+                                color = "black";
                             } else if(e.group == 3) {
-                                color = "#C4CFD0"
+                                color = "black"
                             }
                             return color;
                         })
@@ -551,7 +575,7 @@ $(function() {
                     width = 200;
                 }
                 else {
-                    height = 200;
+                    height = 300;
                     width = 1000;
                 }
 
@@ -612,6 +636,13 @@ $(function() {
                     if(data.length == 0) {
                         
                     } else {
+
+                        if(inputID == "bacon-hint1") {
+                            $("#bacon-1-autosuggest").empty();
+                        }
+                        else if(inputID == "bacon-hint2") {
+                            $("#bacon-2-autosuggest").empty();
+                        }
 
                         $.each(data, function( index, value ) {
                             var a = $("<a></a>")

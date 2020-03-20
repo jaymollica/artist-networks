@@ -63,25 +63,16 @@
   }
   elseif(isset($_GET['bacon'])) {
 
-    // $bc = array(
-    //   500115393, //duchamp
-    //   //500004441, // demuth (connects duchamp and stieg)
-    //   500024301, //stieg
-    //   //500018666, //okeefe
-    // );
-
-    // 500015030 // man ray
-
     $ulan1 = $_GET['ulan1'];
     $ulan2 = $_GET['ulan2'];
 
-    // $ulan1 = 500009666;
-    // $ulan2 = 500002941;
-
+    // return array of degrees of separation per connection
     $bacon = $nw->breadthFirstSearch($ulan1, $ulan2);
-    print_r($bacon);
 
-    // echo json_encode($b);
+    // prepare the bacon array for visualization
+    $diagram = $nw->prepareBacon($bacon);
+
+    echo json_encode($diagram);
 
   }
 

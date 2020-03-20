@@ -6,6 +6,12 @@
     padding: 0 50px;
   }
 
+  #bacon-stage {
+    height: 500px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
   .bacon-div {
     width: 50%;
     text-align: center;
@@ -41,6 +47,13 @@
     } 
   }
 
+  #bacon-1-autosuggest,
+  #bacon-2-autosuggest {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 0;
+  }
+
   button:disabled,
   button[disabled]{
     background-color: $footer-bg;
@@ -50,6 +63,9 @@
   .preamble {
     padding-left: 50px;
     padding-right: 50px;
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 50px;
   }
 
   .footer {

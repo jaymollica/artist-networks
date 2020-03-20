@@ -325,6 +325,10 @@ body.loading .modal {
   margin-top: 200px; }
   .bacon-container #baconForm {
     padding: 0 50px; }
+  .bacon-container #bacon-stage {
+    height: 500px;
+    width: 90%;
+    margin: 0 auto; }
   .bacon-container .bacon-div {
     width: 50%;
     text-align: center; }
@@ -347,13 +351,21 @@ body.loading .modal {
       padding: 12px 24px;
       border: 1px solid white;
       cursor: pointer; }
+  .bacon-container #bacon-1-autosuggest,
+  .bacon-container #bacon-2-autosuggest {
+    list-style-type: none;
+    text-align: left;
+    padding-left: 0; }
   .bacon-container button:disabled,
   .bacon-container button[disabled] {
     background-color: #f7f5f5;
     color: white; }
   .bacon-container .preamble {
     padding-left: 50px;
-    padding-right: 50px; }
+    padding-right: 50px;
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 50px; }
   .bacon-container .footer {
     margin-top: 148px; }
 
