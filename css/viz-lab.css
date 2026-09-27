@@ -1,0 +1,198 @@
+/* Visualization Lab — sharp corners, full-bleed grid, mobile-first.
+   Layered on top of main.css; only styles lab-specific components. */
+
+.viz-lab .viz-note {
+  border-left: 3px solid #c08a00;
+  background: rgba(192, 138, 0, 0.08);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+
+/* --- Gallery: horizontal cards (image left, meta right), like the detail rows --- */
+.viz-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.viz-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  background: #111;
+}
+@media (max-width: 640px) { .viz-card { flex-direction: column; } }
+
+.viz-card-img {
+  flex: 0 0 42%;
+  max-width: 42%;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  background-size: contain;          /* show the whole artwork — never crop/zoom */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #1c1c1c;
+}
+@media (max-width: 640px) { .viz-card-img { flex-basis: auto; max-width: 100%; width: 100%; } }
+
+.viz-card-meta {
+  flex: 1;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  border-left: 1px solid rgba(127, 127, 127, 0.25);
+}
+@media (max-width: 640px) { .viz-card-meta { border-left: 0; border-top: 1px solid rgba(127, 127, 127, 0.25); } }
+.viz-card-meta h2 { font-size: 1rem; margin: 0 0 0.2rem; }
+.viz-card-meta p  { font-size: 0.85rem; opacity: 0.7; margin: 0; }
+.viz-card-langs { margin-top: 0.45rem !important; display: flex; gap: 0.3rem; flex-wrap: wrap; }
+.viz-card:hover .viz-card-meta h2,
+.viz-card:focus-visible .viz-card-meta h2 { text-decoration: underline; }
+
+/* --- Subject detail: original image + per-language descriptions --- */
+.viz-original-fig { margin: 1.5rem 0; max-width: 440px; }
+.viz-original-fig img { width: 100%; height: auto; display: block; }
+.viz-original-fig figcaption {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.65;
+  margin-top: 0.5rem;
+}
+.viz-credit { display: block; text-transform: none; letter-spacing: 0; margin-top: 0.25rem; }
+
+.viz-descs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 0.5rem 0 0.25rem;
+}
+.viz-desc h2 { font-size: 1.05rem; margin: 0 0 0.5rem; }
+.viz-desc p  { font-size: 0.78rem; line-height: 1.6; }
+.viz-lab .viz-desc-note { font-size: 0.68rem; opacity: 0.55; font-style: italic; margin: 0.4rem 0 2rem; }
+.viz-source a { font-size: 0.9rem; }
+
+/* --- Per-model comparison: one block per model, language results side by side --- */
+.viz-modelgroup { margin-bottom: 1.75rem; }
+.viz-modelgroup-head {
+  font-size: 0.95rem;
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+}
+.viz-modelgroup-head code { font-size: 0.72rem; opacity: 0.55; margin-left: 0.4rem; word-break: break-all; }
+.viz-langrow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.viz-models-head { margin-top: 1rem; }
+.viz-lab .viz-models-sub { font-size: 0.85rem; opacity: 0.7; margin-top: 0.25rem; }
+
+/* --- Model reconstruction grid --- */
+/* One result per row: image on the left, model + scores + critique on the right. */
+.viz-models {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.viz-model {
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+@media (max-width: 640px) { .viz-model { flex-direction: column; } }
+
+/* Left: image — sized by its column width, never by the text height */
+.viz-model-media { flex: 0 0 42%; max-width: 42%; min-width: 0; }
+@media (max-width: 640px) { .viz-model-media { flex-basis: auto; max-width: 100%; } }
+
+.viz-model-img { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #161616; }
+.viz-model-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+.viz-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.4;
+}
+
+.viz-model.is-loading .viz-model-img::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, rgba(255,255,255,0.06) 0 12px, rgba(255,255,255,0.12) 12px 24px);
+  animation: viz-pulse 1s linear infinite;
+}
+@keyframes viz-pulse { to { background-position: 34px 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .viz-model.is-loading .viz-model-img::after { animation: none; }
+}
+
+/* Right: info column */
+.viz-model-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.85rem 1rem;
+  border-left: 1px solid rgba(127, 127, 127, 0.25);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+@media (max-width: 640px) { .viz-model-info { border-left: 0; border-top: 1px solid rgba(127, 127, 127, 0.25); } }
+
+.viz-model-head h3 { font-size: 0.95rem; margin: 0 0 0.15rem; }
+.viz-model-head code { font-size: 0.72rem; opacity: 0.55; word-break: break-all; }
+
+.viz-model-scores {
+  display: flex; gap: 1rem;
+  margin: 0.6rem 0;
+  font-size: 0.8rem;
+}
+.viz-score { opacity: 0.75; }
+.viz-score strong { opacity: 1; font-size: 0.95rem; }
+
+/* .viz-lab scope beats main.css's `.about p { font-size: 24px }` (class+element). */
+.viz-lab .viz-model-notes {
+  font-size: 0.78rem;   /* matches .viz-desc p */
+  line-height: 1.6;
+  opacity: 0.9;
+  margin: 0 0 0.85rem;
+  flex: 1;
+}
+.viz-model.is-error .viz-model-notes { color: #e06666; opacity: 1; }
+
+.viz-btn {
+  appearance: none;
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+.viz-btn:hover:not(:disabled) { background: currentColor; color: #111; }
+.viz-btn:focus-visible { outline: 2px solid #4ea1ff; outline-offset: 2px; }
+.viz-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Language badge on subject titles (distinguishes EN vs ES of the same work) */
+.viz-lang-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.12em 0.5em;
+  border: 1px solid rgba(127, 127, 127, 0.5);
+  vertical-align: middle;
+  opacity: 0.75;
+  white-space: nowrap;
+}

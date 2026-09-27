@@ -4,4 +4,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.medias-res.net/sitemap.xml
+Sitemap: https://networks.vaguespac.es/sitemap.xml

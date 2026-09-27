@@ -6,3 +6,7 @@
 load_data.php
 settings.php
 data/
+viz-cache/
+og-cache/
+.portrait-cache/
+.env

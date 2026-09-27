@@ -1,45 +1,60 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Medias Res: Explore the social networks of artists</title>
-  <meta name="title" content="Medias Res: Explore the social networks of artists.">
+  <title>Artist Networks: Explore the social networks of artists</title>
+  <meta name="title" content="Artist Networks: Explore the social networks of artists.">
   <meta name="description" content="An interactive visualization of connections between artists and the movements and organizations they are related to.">
   <meta name="author" content="Jay Mollica">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.medias-res.net/">
-  <meta property="og:title" content="Medias Res: Explore the social networks of artists.">
+  <meta property="og:url" content="https://networks.vaguespac.es/">
+  <meta property="og:title" content="Artist Networks: Explore the social networks of artists.">
   <meta property="og:description" content="An interactive visualization of connections between artists and the movements and organizations they are related to.">
-  <meta property="og:image" content="https://www.medias-res.net/logo.png">
+  <meta property="og:image" content="https://networks.vaguespac.es/logo.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://www.medias-res.net/">
-  <meta property="twitter:title" content="Medias Res: Explore the social networks of artists.">
+  <meta property="twitter:url" content="https://networks.vaguespac.es/">
+  <meta property="twitter:title" content="Artist Networks: Explore the social networks of artists.">
   <meta property="twitter:description" content="An interactive visualization of connections between artists and the movements and organizations they are related to.">
-  <meta property="twitter:image" content="https://www.medias-res.net/tile.png">
+  <meta property="twitter:image" content="https://networks.vaguespac.es/tile.png">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="https://www.medias-res.net/logo.png">
+  <link rel="apple-touch-icon" href="https://networks.vaguespac.es/logo.png">
   <!-- Place favicon.ico in the root directory -->
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <script defer src="https://analytics.vaguespac.es/script.js" data-website-id="4261d199-04cb-456f-a3ce-e2d22b4bfd17"></script>
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <!--[if lte IE 9]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   <![endif]-->
 
-  <div class="bacon-container">
+  <div class="site-title-container">
+    <nav class="site-title" aria-label="Primary">
+      <a href="/"><h1>ARTIST &middot; NETWORKS</h1></a>
+      <ul class="sub-menu">
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/reports.php">Reports</a></li>
+        <!-- <li><a href="/viz-lab.php">Lab</a></li> hidden for now -->
+        <li><a href="/updates.php">Updates</a></li>
+        <li><a href="/bacon.html">Bacon</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main id="main" class="bacon-container">
     <div id="mobile-header">
-      <h1><a href="/">Medias Res</a></h1>
+      <h1><a href="/">Artist Networks</a></h1>
       <p>Explore the social networks of artists</p>
     </div>
     <div class="preamble">
@@ -47,15 +62,25 @@
 
       <p>You might have already heard of the <a href="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon" target="_blank">Six Degrees of Kevin Bacon</a>, a game where people try to find the least amount of connections between actor Kevin Bacon and another arbitrary actor. Art Bacon is a tool that helps you find the shortest paths between any two artists.</p>
 
-      <p>Who connects Picasso to the Fluxus movement? How does Agnes Martin connect to Ansel Adams?</p>
+      <p>Who connects Picasso to Andy Warhol? How does Vincent van Gogh connect to Yayoi Kusama?</p>
 
-      <p>Enter the names of two artists and make some art bacon.</p>
+      <p>Enter two artists, or try one of these:</p>
 
     </div>
-    <form id="baconForm">
+
+    <div class="bacon-pairs">
+      <a href="?ulan1=500031212&amp;ulan2=500009365">Hopper &rarr; Dal&iacute;</a>
+      <a href="?ulan1=500019484&amp;ulan2=500006031">Monet &rarr; Warhol</a>
+      <a href="?ulan1=500115588&amp;ulan2=500122518">van Gogh &rarr; Kusama</a>
+      <a href="?ulan1=500011051&amp;ulan2=500009666">Rembrandt &rarr; Picasso</a>
+      <a href="?ulan1=500010879&amp;ulan2=500030701">da Vinci &rarr; Kahlo</a>
+      <a href="?ulan1=500015254&amp;ulan2=500006031">Botticelli &rarr; Warhol</a>
+    </div>
+    <form id="baconForm" role="search" aria-label="Find a path between two artists">
       <div class="source-input bacon-div search-wrapper">
         <div class="input-wrapper-left">
-          <input type="text" class="network-search-box" id="bacon-hint1" placeholder="Type to search..." />
+          <label for="bacon-hint1" class="visuallyhidden">From artist</label>
+          <input type="text" class="network-search-box" id="bacon-hint1" placeholder="Type to search..." autocomplete="off" />
           <input type="hidden" id="searchUlan1" value="" />
           <ul id="bacon-1-autosuggest">
           </ul>
@@ -63,43 +88,51 @@
       </div>
       <div class="target-input bacon-div search-wrapper">
         <div class="input-wrapper-right">
-          <input type="text" class="network-search-box" id="bacon-hint2" placeholder="Type to search..." />
+          <label for="bacon-hint2" class="visuallyhidden">To artist</label>
+          <input type="text" class="network-search-box" id="bacon-hint2" placeholder="Type to search..." autocomplete="off" />
           <input type="hidden" id="searchUlan2" value="" />
           <ul id="bacon-2-autosuggest">
           </ul>
         </div>
       </div>
       <div class="bacon-submit">
-        <button href="#" type="button" id="submitBacon">Find connections...</button>
+        <button type="button" id="submitBacon">Find connections...</button>
       </div>
     </form>
+    <div id="bacon-controls" class="bacon-controls" hidden>
+      <div class="bacon-legend">
+        <span class="legend-label">Relationships:</span>
+        <span class="legend-item"><i class="legend-swatch" style="background:#5b9bd5"></i>mentorship</span>
+        <span class="legend-item"><i class="legend-swatch" style="background:#e57373"></i>family</span>
+        <span class="legend-item"><i class="legend-swatch" style="background:#81c784"></i>affiliation</span>
+        <span class="legend-item"><i class="legend-swatch" style="background:#ba68c8"></i>collaboration</span>
+        <span class="legend-item"><i class="legend-swatch" style="background:#888"></i>other</span>
+      </div>
+      <div class="bacon-toggles">
+        <span class="legend-label">Show:</span>
+        <label><input type="checkbox" data-toggle="name"  checked> Names</label>
+        <label><input type="checkbox" data-toggle="year"  checked> Dates</label>
+        <label><input type="checkbox" data-toggle="tag"   checked> FROM / TO</label>
+        <label><input type="checkbox" data-toggle="edge"  checked> Relationship labels</label>
+      </div>
+    </div>
     <div id="bacon-stage">
     </div>
-  </div>
+  </main>
   <div class="footer">
     <div class="info">
       <ul>
-        <li><a href="/">medias-res.net</a></li>
-        <li>Explore the social networks of artists</li>
-        <li class="lede">by <a href="https://www.jaymollica.com">Jay Mollica</a><li>
+        <li><a href="/">networks.vaguespac.es</a></li>
+        <li>Explore the social networks of artists.</li>
+        <li class="lede">by <a href="https://www.jaymollica.com">Jay Mollica</a></li>
         <li><a href="/about.html">About</a></li>
-        <li>&copy; 2019</li>
+        <li>&copy; <span class="current-year">2026</span> Vague Media, LLC</li>
       </ul>
     </div>
   </div>
 
   <div class="modal"></div>
-  
-  <div class="site-title-container">
-    <div class="site-title">
-      <a href="/"><h1>MEDIAS &middot; RES</h1></a>
-      <ul class="sub-menu">
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/bacon.html">Bacon</a></li>
-      </ul>
-    </div>
-  </div>
-  
+
   <script src="js/vendor/modernizr-3.6.0.min.js"></script>
   <script src="js/vendor/jquery-3.3.1.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
